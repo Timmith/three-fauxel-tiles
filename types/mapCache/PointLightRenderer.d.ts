@@ -30,7 +30,7 @@ export default class PointLightRenderer {
     private _pixelsHeight;
     getLightGroup(useShadows?: boolean, shadowResolution?: number): LightGroup;
     private _renderTarget;
-    get texture(): import("three").Texture;
+    get texture(): import("three").Texture<unknown>;
     pointLightScene: Scene;
     pointLightCamera: OrthographicCamera;
     offsetX: number;

@@ -1,5 +1,4 @@
 import {
-  CylinderBufferGeometry,
   Material,
   Mesh,
   Object3D,

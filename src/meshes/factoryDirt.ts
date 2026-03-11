@@ -1,12 +1,12 @@
 import { BufferAttribute, Object3D } from 'three'
 import { Color } from 'three'
-import { Material, Mesh, PlaneBufferGeometry, Vector3 } from 'three'
+import { Material, Mesh, PlaneGeometry, Vector3 } from 'three'
 import NoiseHelper4D from '../helpers/utils/NoiseHelper4D'
 import { clamp, lerp } from '../utils/math'
 import NamedBitsInNumber from '../helpers/utils/NamedBitsInNumber'
 
 const __tempVec3 = new Vector3()
-const __protoGeos: Map<string, PlaneBufferGeometry> = new Map()
+const __protoGeos: Map<string, PlaneGeometry> = new Map()
 function __getProtoGeo(uOffset: number, vOffset: number) {
   const key = `${uOffset}:${vOffset}`
   if (!__protoGeos.has(key)) {
@@ -14,7 +14,7 @@ function __getProtoGeo(uOffset: number, vOffset: number) {
     const color = new Color(0.05, 0.05, 0.05)
     const color2 = new Color(0.16, 0.14, 0.13)
     const basis = 18
-    const geo = new PlaneBufferGeometry(basis, basis, basis * 2, basis * 2)
+    const geo = new PlaneGeometry(basis, basis, basis * 2, basis * 2)
     const posAttr = geo.attributes.position
     const posArr = posAttr.array as Float32Array
     const uvAttr = geo.attributes.uv

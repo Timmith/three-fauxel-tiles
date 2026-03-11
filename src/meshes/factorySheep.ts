@@ -1,4 +1,4 @@
-import { Material, Mesh, Object3D, SphereBufferGeometry } from 'three'
+import { Material, Mesh, Object3D, SphereGeometry } from 'three'
 import { Easing } from '../animation/Easing'
 import {
   getCachedChamferedBoxGeometry,
@@ -131,7 +131,7 @@ export function makeSheep(
   head.add(ear2Container)
 
   //eyes
-  const eyeGeo = new SphereBufferGeometry(2, 16, 8)
+  const eyeGeo = new SphereGeometry(2, 16, 8)
   const eye = new Mesh(eyeGeo, matEyes)
   eye.position.x = -6
   eye.position.y = -1

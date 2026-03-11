@@ -2,11 +2,11 @@ import {
   BufferAttribute,
   BufferGeometry,
   Float32BufferAttribute,
-  LinearEncoding,
   Mesh,
   NearestFilter,
+  NoColorSpace,
   OrthographicCamera,
-  PlaneBufferGeometry,
+  PlaneGeometry,
   Points,
   RepeatWrapping,
   Scene,
@@ -35,7 +35,7 @@ export default class MapWithSpritesCacheRenderer {
   spriteTopPointsGeo: BufferGeometry
   private _pointsTopMaterial: TileCacheWriterPointMaterial
   private _pointsBottomMaterial: TileCacheWriterPointMaterial
-  backdrop: Mesh<PlaneBufferGeometry, BasicTextureMaterial>
+  backdrop: Mesh<PlaneGeometry, BasicTextureMaterial>
   offsetX = 0
   offsetY = 0
   private _backdropUvST: Vector4
@@ -81,7 +81,7 @@ export default class MapWithSpritesCacheRenderer {
       const mapCache = new WebGLRenderTarget(viewWidth, viewHeight, {
         magFilter: NearestFilter,
         minFilter: NearestFilter,
-        encoding: LinearEncoding,
+        colorSpace: NoColorSpace,
         generateMipmaps: false,
         wrapS: RepeatWrapping,
         wrapT: RepeatWrapping
@@ -137,7 +137,7 @@ export default class MapWithSpritesCacheRenderer {
     backdropMaterial.depthWrite = false
 
     const backdrop = new Mesh(
-      new PlaneBufferGeometry(200, 200),
+      new PlaneGeometry(200, 200),
       backdropMaterial
     )
     mapCacheScene.add(backdrop)

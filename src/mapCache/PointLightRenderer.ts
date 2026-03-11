@@ -3,8 +3,8 @@ import {
   BufferGeometry,
   Color,
   Float32BufferAttribute,
-  LinearEncoding,
   NearestFilter,
+  NoColorSpace,
   OrthographicCamera,
   Points,
   RepeatWrapping,
@@ -41,9 +41,9 @@ class LightGroup {
   ) {
     const lightPointsGeo = this._lightPointsGeo
     const xyzSizeAttr = lightPointsGeo.getAttribute('xyzSize')
-    const xyzSizeArr = xyzSizeAttr.array as number[]
+    const xyzSizeArr = xyzSizeAttr.array as Float32Array
     const colorAttr = lightPointsGeo.getAttribute('color')
-    const colorArr = colorAttr.array as number[]
+    const colorArr = colorAttr.array as Float32Array
     lightPointsGeo.drawRange.count = 0
     let j = 0
     for (let i = 0; i < this._lights.length; i++) {
@@ -171,7 +171,7 @@ export default class PointLightRenderer {
       depthBuffer: false,
       minFilter: NearestFilter,
       magFilter: NearestFilter,
-      encoding: LinearEncoding,
+      colorSpace: NoColorSpace,
       wrapS: RepeatWrapping,
       wrapT: RepeatWrapping,
       generateMipmaps: false

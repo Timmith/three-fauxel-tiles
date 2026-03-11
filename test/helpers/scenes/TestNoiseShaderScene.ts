@@ -1,4 +1,4 @@
-import { Mesh, PlaneBufferGeometry, Vector4 } from 'three'
+import { Mesh, PlaneGeometry, Vector4 } from 'three'
 import BaseTest2DScene from './BaseTest2DScene'
 import lib from '@lib/index'
 
@@ -7,7 +7,7 @@ export default class TestNoiseShaderScene extends BaseTest2DScene {
   constructor() {
     super()
 
-    const geo = new PlaneBufferGeometry(1, 1)
+    const geo = new PlaneGeometry(1, 1)
     const uvST = new Vector4(1, 1, 0, 0)
     this.uvST = uvST
     const test = new Mesh(

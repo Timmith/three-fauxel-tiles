@@ -1,4 +1,4 @@
-import { PCFShadowMap, sRGBEncoding, WebGLRenderer } from 'three'
+import { PCFShadowMap, SRGBColorSpace, WebGLRenderer } from 'three'
 import { RESET_USER_SETTINGS_TO_DEFAULTS } from '~/constants'
 
 import device from './device'
@@ -39,7 +39,7 @@ attributeValues.forEach((v) => {
 })
 renderer.shadowMap.enabled = false
 renderer.shadowMap.type = PCFShadowMap
-renderer.outputEncoding = sRGBEncoding
+renderer.outputColorSpace = SRGBColorSpace
 // renderer.gammaOutput = true
 // renderer.gammaFactor = 2.2
 renderer.autoClear = false

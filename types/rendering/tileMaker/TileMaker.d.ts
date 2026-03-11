@@ -19,7 +19,7 @@ export default class TileMaker {
     protected _indexedMeshes: (() => Object3D)[];
     protected _tilesPerEdge: number;
     protected _maxTiles: number;
-    constructor(_pixelsPerTile: number, pixelsPerCacheEdge: number | undefined, _passes: MaterialPassType[], indexedMeshMakers: (() => Object3D)[]);
-    getTexture(pass?: MaterialPassType): import("three").Texture;
+    constructor(_pixelsPerTile: number | undefined, pixelsPerCacheEdge: number | undefined, _passes: MaterialPassType[] | undefined, indexedMeshMakers: (() => Object3D)[]);
+    getTexture(pass?: MaterialPassType): import("three").Texture<unknown>;
     getTileId(tileDescription: Uint8Array): number;
 }

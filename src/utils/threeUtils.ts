@@ -2,7 +2,7 @@ import {
   DataTexture,
   NearestFilter,
   RGBAFormat,
-  sRGBEncoding,
+  SRGBColorSpace,
   Texture,
   TextureLoader,
   UnsignedByteType
@@ -50,7 +50,7 @@ export async function loadPixelatedTexture(path: string, flipY = true) {
     loader.load(
       path,
       (texture) => {
-        texture.encoding = sRGBEncoding
+        texture.colorSpace = SRGBColorSpace
         texture.minFilter = NearestFilter
         texture.magFilter = NearestFilter
         texture.flipY = flipY
@@ -58,7 +58,8 @@ export async function loadPixelatedTexture(path: string, flipY = true) {
       },
       undefined,
       function (err) {
-        console.error('An error happened.', err.message)
+        const message = err instanceof Error ? err.message : String(err)
+        console.error('An error happened.', message)
       }
     )
   })

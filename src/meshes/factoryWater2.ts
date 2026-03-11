@@ -1,12 +1,12 @@
 import { BufferAttribute, Object3D } from 'three'
-import { Material, Mesh, PlaneBufferGeometry, Vector3 } from 'three'
+import { Material, Mesh, PlaneGeometry, Vector3 } from 'three'
 import NoiseHelper4D from '../helpers/utils/NoiseHelper4D'
 import { lerp } from '../utils/math'
 
 export function makeWater2(mat: Material, timeScale = 1, time = 0) {
   const tempVec3 = new Vector3()
   const basis = 34
-  const geo = new PlaneBufferGeometry(basis, basis, basis * 2, basis * 2)
+  const geo = new PlaneGeometry(basis, basis, basis * 2, basis * 2)
   const posAttr = geo.attributes.position
   const posArr = posAttr.array as Float32Array
   const normalAttr = geo.attributes.normal

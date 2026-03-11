@@ -2,7 +2,7 @@ import { BufferGeometry } from 'three';
 import NamedBitsInBytes from '../../../helpers/utils/NamedBitsInBytes';
 import NamedBitsInNumber from '../../../helpers/utils/NamedBitsInNumber';
 import SpriteMaker from './SpriteMaker';
-declare type BottomAndTopIds = {
+type BottomAndTopIds = {
     idTop: number;
     idBottom: number;
 };

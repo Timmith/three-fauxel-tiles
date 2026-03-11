@@ -1,4 +1,4 @@
-import { clamp } from 'three/src/math/MathUtils'
+import { clamp } from '../../utils/math'
 import IHelper3D from './IHelper3D'
 
 export default class ClampHelper3D implements IHelper3D {

@@ -1,9 +1,9 @@
 import {
-  CylinderBufferGeometry,
+  CylinderGeometry,
   Material,
   Mesh,
   Object3D,
-  TorusBufferGeometry
+  TorusGeometry
 } from 'three'
 import { getChamferedBoxGeometry } from '../utils/geometry'
 import { mergeMeshes } from '../utils/mergeMeshes'
@@ -11,15 +11,15 @@ import { mergeMeshes } from '../utils/mergeMeshes'
 export function makeLampPost(ironBlackMat: Material) {
   const lampPost = new Object3D()
   const ironCylinder = new Mesh(
-    new CylinderBufferGeometry(0.5, 0.5, 1, 16, 1),
+    new CylinderGeometry(0.5, 0.5, 1, 16, 1),
     ironBlackMat
   )
-  const cylPosArr = ironCylinder.geometry.attributes.position.array as number[]
+  const cylPosArr = ironCylinder.geometry.attributes.position.array as Float32Array
   for (let i = 1; i < cylPosArr.length; i += 3) {
     cylPosArr[i] += 0.5
   }
   const ring = new Mesh(
-    new TorusBufferGeometry(0.45, 0.1, 32, 16),
+    new TorusGeometry(0.45, 0.1, 32, 16),
     ironBlackMat
   )
   const lampPole = ironCylinder.clone()

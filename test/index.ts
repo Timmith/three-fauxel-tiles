@@ -1,4 +1,4 @@
-import { Clock, Color, Vector3 } from 'three'
+import { Color, Timer, Vector3 } from 'three'
 
 import BaseTestScene from './helpers/scenes/BaseTestScene'
 import renderer from './renderer'
@@ -12,7 +12,8 @@ import { getUrlParam } from './utils/location'
 
 document.addEventListener('gesturestart', (e) => e.preventDefault()) // disable zooming on mobile
 
-const clock = new Clock()
+const timer = new Timer()
+timer.connect(document)
 renderer.setClearColor(new Color(0x344556), 1.0)
 cameraShaker.camera.position.set(0, 0.5, 0.5)
 cameraShaker.camera.lookAt(new Vector3())
@@ -33,9 +34,10 @@ setTimeout(() => {
   let frameCounter = 0
   let simDt = 0
   let renderDt = 0
-  const loop = () => {
+  const loop = (timestamp?: number) => {
     frameCounter++
-    const dt = Math.min(clock.getDelta(), 0.1)
+    timer.update(timestamp)
+    const dt = Math.min(timer.getDelta(), 0.1)
     simDt += dt
     renderDt += dt
 

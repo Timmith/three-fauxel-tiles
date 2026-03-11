@@ -1,5 +1,5 @@
 import { BufferAttribute, Object3D } from 'three'
-import { Material, Mesh, PlaneBufferGeometry, Vector3 } from 'three'
+import { Material, Mesh, PlaneGeometry, Vector3 } from 'three'
 import { clamp, lerp, unlerp } from '../utils/math'
 import NamedBitsInNumber from '../helpers/utils/NamedBitsInNumber'
 import { detRandSand } from '../utils/random'
@@ -36,11 +36,11 @@ const tempVec3 = new Vector3()
 const tempVec3B = new Vector3()
 const originalVec3 = new Vector3()
 const basis = 18
-const __protoGeos: Map<string, PlaneBufferGeometry> = new Map()
+const __protoGeos: Map<string, PlaneGeometry> = new Map()
 function __getProtoGeo(uOffset: number, vOffset: number, maxStrength = 0.35) {
   const key = `${uOffset}:${vOffset}`
   if (!__protoGeos.has(key)) {
-    const geo = new PlaneBufferGeometry(basis, basis, basis * 2, basis * 2)
+    const geo = new PlaneGeometry(basis, basis, basis * 2, basis * 2)
     const posAttr = geo.attributes.position
     const posArr = posAttr.array as Float32Array
     const colorArr = new Float32Array(posAttr.count * 3)

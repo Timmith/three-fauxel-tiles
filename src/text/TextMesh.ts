@@ -8,7 +8,7 @@ import {
   Material,
   Matrix4,
   Mesh,
-  PlaneBufferGeometry,
+  PlaneGeometry,
   Scene,
   ShaderMaterial,
   Texture,
@@ -395,7 +395,7 @@ const initMaterial = (settings: TextSettings) => {
   return material
 }
 
-const tempBlankGeo = new PlaneBufferGeometry(0.001, 0.001)
+const tempBlankGeo = new PlaneGeometry(0.001, 0.001)
 tempBlankGeo.computeBoundingBox()
 
 const tryCreateTextGeometry = (

@@ -3,16 +3,16 @@ import NamedBitsInBytes from '../../../helpers/utils/NamedBitsInBytes';
 import NamedBitsInNumber from '../../../helpers/utils/NamedBitsInNumber';
 import MapTileMaker, { mapTileVisualPropertyLookupStrings } from './MapTileMaker';
 import LocalStorageMap from '../../../utils/LocalStorageMap';
-declare type Helper2D = {
+type Helper2D = {
     getValue(x: number, y: number): number;
 };
-declare type BottomAndTopIds = {
+type BottomAndTopIds = {
     idTop: number;
     idBottom: number;
 };
-declare type TileVisualProps = NamedBitsInBytes<typeof mapTileVisualPropertyLookupStrings>;
+type TileVisualProps = NamedBitsInBytes<typeof mapTileVisualPropertyLookupStrings>;
 declare const metaTileStrings: readonly ["water", "dirt", "sand", "beach", "floor", "logWall", "beam", "bricks", "drywall", "grass", "bush", "goldPile", "lampPost", "testObject", "pyramid", "rockyGround", "rocks", "goldOreForRocks", "silverOreForRocks", "ironOreForRocks", "copperOreForRocks", "harvested", "treePine", "maturePlant", "treeMaple", "window", "door"];
-declare type NamedMetaBits = NamedBitsInNumber<typeof metaTileStrings>;
+type NamedMetaBits = NamedBitsInNumber<typeof metaTileStrings>;
 export default class JITTileSampler {
     private _tileMaker;
     private _viewWidthInTiles;

@@ -1,10 +1,10 @@
 import {
   BackSide,
   BoxGeometry,
-  LinearEncoding,
   Mesh,
   MeshDepthMaterial,
   NearestFilter,
+  NoColorSpace,
   Object3D,
   OrthographicCamera,
   Scene,
@@ -67,14 +67,14 @@ export default class TileMaker {
         new WebGLRenderTarget(pixelsPerCacheEdge, pixelsPerCacheEdge, {
           minFilter: NearestFilter,
           magFilter: NearestFilter,
-          encoding: LinearEncoding,
+          colorSpace: NoColorSpace,
           generateMipmaps: false
         })
       )
     }
     const scene = this._scene
 
-    scene.autoUpdate = false
+    scene.matrixWorldAutoUpdate = false
     this._cameraTiltedBottom.rotateX(Math.PI * -0.25)
     this._cameraTiltedBottom.position.set(0, 32, 32)
     scene.add(this._cameraTiltedBottom)

@@ -22,7 +22,7 @@ export declare function radiansDifference(a: number, b: number): number;
 export declare function rand(min?: number, max?: number): number;
 export declare function rand2(scale?: number, offset?: number): number;
 export declare function nextHighestPowerOfTwo(val: number): number;
-export declare function inferDirection(val: number, tolerance?: number): 1 | -1 | 0;
+export declare function inferDirection(val: number, tolerance?: number): 0 | 1 | -1;
 export declare function sqr(v: number): number;
 export declare function pixelLengthOnScreen(a: Vector3, b: Vector3, camera: Camera): number;
 export declare function length(x: number, y: number): number;

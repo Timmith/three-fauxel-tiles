@@ -271,13 +271,13 @@ export default class JITSpriteSampler {
     if (this._sprites.length > 0) {
       const ppt = this._pixelsPerTile
       const xyzBottomAttr = bottomPointsGeo.getAttribute('xyz')
-      const xyzBottomArr = xyzBottomAttr.array as number[]
+      const xyzBottomArr = xyzBottomAttr.array as Float32Array
       const idBottomAttr = bottomPointsGeo.getAttribute('id')
-      const idBottomArr = idBottomAttr.array as number[]
+      const idBottomArr = idBottomAttr.array as Uint16Array
       const xyzTopAttr = topPointsGeo.getAttribute('xyz')
-      const xyzTopArr = xyzTopAttr.array as number[]
+      const xyzTopArr = xyzTopAttr.array as Float32Array
       const idTopAttr = topPointsGeo.getAttribute('id')
-      const idTopArr = idTopAttr.array as number[]
+      const idTopArr = idTopAttr.array as Uint16Array
       bottomPointsGeo.drawRange.count = 0
       topPointsGeo.drawRange.count = 0
       let j = 0

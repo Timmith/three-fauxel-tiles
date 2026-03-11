@@ -4,6 +4,7 @@ import {
   MaterialParameters,
   NearestFilter,
   RawShaderMaterial,
+  Texture,
   Uniform,
   Vector2,
   Vector3,
@@ -37,7 +38,7 @@ export default class PegboardMeshMaterial extends RawShaderMaterial {
     matOptions: MaterialParameters = {}
   ) {
     const params = buildParameters(__defaultParams, options)
-    const uTexture = new Uniform(getTempTexture())
+    const uTexture = new Uniform<Texture>(getTempTexture())
     loadTexture('game/tilemaps/test-blocks.png').then((tex) => {
       uTexture.value = tex
       tex.magFilter = tex.minFilter = NearestFilter

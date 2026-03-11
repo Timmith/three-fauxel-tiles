@@ -2,16 +2,16 @@ import {
   Box2,
   BufferAttribute,
   Camera,
-  GammaEncoding,
+  ColorSpace,
   LinearFilter,
   Mesh,
   MeshBasicMaterial,
-  PlaneBufferGeometry,
+  PlaneGeometry,
   RepeatWrapping,
   RGBAFormat,
+  SRGBColorSpace,
   Scene,
   Texture,
-  TextureEncoding,
   UnsignedByteType,
   Vector2,
   Vector4,
@@ -24,7 +24,7 @@ import { maxTextureSize } from '~/renderer'
 import { removeFromArray, replaceManyInArray } from './arrayUtils'
 
 interface FixedWebGLRenderTargetOptions extends WebGLRenderTargetOptions {
-  encoding: TextureEncoding //this is correct, but missing from types
+  colorSpace: ColorSpace
   downsampleRatio?: number
 }
 
@@ -33,7 +33,7 @@ interface UvOptions extends WebGLRenderTargetOptions {
   uvScaleTranslateUniform?: { value: Vector4 }
 }
 
-export const prototypePlaneGeometryUvAttribute = new PlaneBufferGeometry(
+export const prototypePlaneGeometryUvAttribute = new PlaneGeometry(
   1,
   1,
   1,
@@ -51,7 +51,7 @@ const defaultRenderTargetOptions: Partial<FixedWebGLRenderTargetOptions> = {
   depthBuffer: false,
   stencilBuffer: false,
   generateMipmaps: false,
-  encoding: GammaEncoding, //this is correct, but missing from types
+  colorSpace: SRGBColorSpace,
   downsampleRatio: 1
 }
 
@@ -81,7 +81,7 @@ export function getSharedTexturePreview(): Mesh {
       map: getSharedTexture(previewIndex),
       transparent: true
     })
-    previewMesh = new Mesh(new PlaneBufferGeometry(0.2, 0.2), previewMaterial)
+    previewMesh = new Mesh(new PlaneGeometry(0.2, 0.2), previewMaterial)
     previewMesh.frustumCulled = false
     previewMesh.position.y += 0.1
     previewMesh.renderOrder = -100
@@ -113,7 +113,7 @@ class SharedRenderTarget {
     this.downsampleRatio = options.downsampleRatio!
     const res = maxTextureSize * this.downsampleRatio
     this.renderTarget = new WebGLRenderTarget(res, res, options)
-    this.renderTarget.texture.encoding = options.encoding || GammaEncoding
+    this.renderTarget.texture.colorSpace = options.colorSpace || SRGBColorSpace
     this.subRegions = []
     this.gridIndex = new Array(Math.pow(maxTextureSize / this.tileSize, 2))
   }

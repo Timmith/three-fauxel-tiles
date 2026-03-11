@@ -4,8 +4,21 @@
   "license": "MIT",
   "private": false,
   "type": "module",
+  "packageManager": "npm@10",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
+  "files": [
+    "lib",
+    "types",
+    "README.md"
+  ],
   "description": "An experimental approach to rendering fake PBR pixel-art",
   "repository": {
     "type": "git",
@@ -42,12 +55,12 @@
     "util": "^0.12.5"
   },
   "peerDependencies": {
-    "three": "^0.134.0",
-    "three-pixel-font": "^0.0.11"
+    "three": "^0.183.0",
+    "three-pixel-font": "^0.0.13"
   },
   "devDependencies": {
     "@types/node": "^17.0.45",
-    "@types/three": "^0.134.0",
+    "@types/three": "^0.183.1",
     "@typescript-eslint/eslint-plugin": "^4.31.0",
     "@typescript-eslint/parser": "^4.31.0",
     "canvas-recorder": "^1.8.0",
@@ -59,10 +72,10 @@
     "glslify-loader": "^2.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.8",
-    "three": "^0.134.0",
-    "three-pixel-font": "^0.0.11",
+    "three": "^0.183.2",
+    "three-pixel-font": "^0.0.13",
     "threejs-camera-controller-first-person-desktop": "^5.0.1",
-    "typescript": "4.4.2"
+    "typescript": "^5.4.5"
   },
   "bugs": {
     "url": "https://github.com/bunnybones1/three-fauxel-tiles/issues"

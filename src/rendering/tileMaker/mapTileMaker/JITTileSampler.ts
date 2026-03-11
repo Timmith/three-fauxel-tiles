@@ -1501,13 +1501,13 @@ export default class JITTileSampler {
 
     if (this.dirtyVis.size > 0) {
       const xyBottomAttr = bottomPointsGeo.getAttribute('xy')
-      const xyBottomArr = xyBottomAttr.array as number[]
+      const xyBottomArr = xyBottomAttr.array as Uint8Array
       const idBottomAttr = bottomPointsGeo.getAttribute('id')
-      const idBottomArr = idBottomAttr.array as number[]
+      const idBottomArr = idBottomAttr.array as Uint16Array
       const xyTopAttr = topPointsGeo.getAttribute('xy')
-      const xyTopArr = xyTopAttr.array as number[]
+      const xyTopArr = xyTopAttr.array as Uint8Array
       const idTopAttr = topPointsGeo.getAttribute('id')
-      const idTopArr = idTopAttr.array as number[]
+      const idTopArr = idTopAttr.array as Uint16Array
       const currentFrame =
         __animFrameTimes[this._animFrame % __animFrameTimes.length]
       for (const v of this.dirtyVis) {

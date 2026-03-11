@@ -1,7 +1,7 @@
 import {
   BufferGeometry,
   PlaneGeometry,
-  SphereBufferGeometry,
+  SphereGeometry,
   Vector3
 } from 'three'
 
@@ -13,9 +13,9 @@ export function getChamferedBoxGeometry(
   depth: number,
   chamfer = 0.005
 ) {
-  const geo = new SphereBufferGeometry(0.02, 8, 5, Math.PI * 0.125)
-  const posArr = geo.attributes.position.array as number[]
-  const normArr = geo.attributes.normal.array as number[]
+  const geo = new SphereGeometry(0.02, 8, 5, Math.PI * 0.125)
+  const posArr = geo.attributes.position.array as Float32Array
+  const normArr = geo.attributes.normal.array as Float32Array
   const tempVec = new Vector3()
   const tempPos = new Vector3()
   const halfWidth = width * 0.5 - chamfer
@@ -69,7 +69,7 @@ export function getCachedChamferedBoxGeometry(
     const geoOffset = __cachedChamferedBoxGeometry.get(key)!.clone()
     geoOffset.attributes.uv = geo.attributes.uv
     geoOffset.attributes.normal = geo.attributes.normal
-    const posArr = geoOffset.attributes.position.array as number[]
+    const posArr = geoOffset.attributes.position.array as Float32Array
     for (let i3 = 0; i3 < posArr.length; i3 += 3) {
       posArr[i3] += offsetX
       posArr[i3 + 1] += offsetY
@@ -80,7 +80,7 @@ export function getCachedChamferedBoxGeometry(
   return __cachedOffsetChamferedBoxGeometry.get(key2)!
 }
 
-const __cachedSphereGeometry = new Map<string, SphereBufferGeometry>()
+const __cachedSphereGeometry = new Map<string, SphereGeometry>()
 export function getCachedSphereGeometry(
   radius: number,
   segsX: number,
@@ -90,7 +90,7 @@ export function getCachedSphereGeometry(
   if (!__cachedSphereGeometry.has(key)) {
     __cachedSphereGeometry.set(
       key,
-      new SphereBufferGeometry(radius, segsX, segsY)
+      new SphereGeometry(radius, segsX, segsY)
     )
   }
   return __cachedSphereGeometry.get(key)!

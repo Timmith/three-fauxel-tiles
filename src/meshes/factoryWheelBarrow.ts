@@ -1,11 +1,9 @@
 import {
-  ExtrudeBufferGeometry,
-  LatheBufferGeometry,
+  ExtrudeGeometry,
   LatheGeometry,
   Material,
   Mesh,
   Object3D,
-  RingBufferGeometry,
   Shape,
   Vector2
 } from 'three'
@@ -45,7 +43,7 @@ export function makeWheelBarrow(
 
   points.push(points[0])
 
-  const geometry = new LatheBufferGeometry(points, 32)
+  const geometry = new LatheGeometry(points, 32)
   const wheel = new Mesh(geometry, matWood)
   const axel = new Mesh(
     getCachedChamferedBoxGeometry(axelWidth, 3, 3, 1),

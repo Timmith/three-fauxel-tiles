@@ -1,9 +1,9 @@
 import {
-  LinearEncoding,
   Mesh,
   NearestFilter,
+  NoColorSpace,
   OrthographicCamera,
-  PlaneBufferGeometry,
+  PlaneGeometry,
   RepeatWrapping,
   Scene,
   Texture,
@@ -19,7 +19,7 @@ export default class NoiseTextureMaker {
   private _scene: Scene
   private _camera: OrthographicCamera
   constructor(res = 256) {
-    const geo = new PlaneBufferGeometry(2, 2)
+    const geo = new PlaneGeometry(2, 2)
     const uvST = new Vector4(1, 1, 0, 0)
     const mesh = new Mesh(
       geo,
@@ -32,7 +32,7 @@ export default class NoiseTextureMaker {
     const renderTarget = new WebGLRenderTarget(res, res, {
       minFilter: NearestFilter,
       magFilter: NearestFilter,
-      encoding: LinearEncoding,
+      colorSpace: NoColorSpace,
       wrapS: RepeatWrapping,
       wrapT: RepeatWrapping,
       generateMipmaps: false

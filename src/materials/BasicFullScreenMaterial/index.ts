@@ -22,6 +22,11 @@ const __defaultParams: Parameters = {
   useTwoLayers: false
 }
 
+function getTextureSize(texture: Texture) {
+  const image = texture.image as { width?: number; height?: number } | undefined
+  return new Vector2(image?.width ?? 1, image?.height ?? 1)
+}
+
 export class BasicFullScreenMaterial extends RawShaderMaterial {
   constructor(options: Partial<Parameters>) {
     const params = buildParameters(__defaultParams, options)
@@ -34,9 +39,7 @@ export class BasicFullScreenMaterial extends RawShaderMaterial {
     super({
       uniforms: {
         uMapTex: new Uniform(params.mapTex),
-        uMapSize: new Uniform(
-          new Vector2(params.mapTex.image.width, params.mapTex.image.height)
-        ),
+        uMapSize: new Uniform(getTextureSize(params.mapTex)),
         uTileTex: new Uniform(params.tileTex),
         uTransform: new Uniform(params.transform),
         uAspectRatio: pixelAspectRatioUniform

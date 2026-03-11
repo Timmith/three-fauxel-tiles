@@ -1,8 +1,8 @@
 import {
   BufferAttribute,
   BufferGeometry,
-  LinearEncoding,
   NearestFilter,
+  NoColorSpace,
   OrthographicCamera,
   Points,
   RepeatWrapping,
@@ -110,7 +110,7 @@ export default class MapCacheRenderer {
       const mapCache = new WebGLRenderTarget(viewWidth, viewHeight, {
         magFilter: NearestFilter,
         minFilter: NearestFilter,
-        encoding: LinearEncoding,
+        colorSpace: NoColorSpace,
         generateMipmaps: false,
         wrapS: RepeatWrapping,
         wrapT: RepeatWrapping

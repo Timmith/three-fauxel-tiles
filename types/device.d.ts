@@ -1,6 +1,6 @@
-declare type DeviceType = 'mobile' | 'tablet' | 'desktop';
-declare type DeviceOrientation = 'landscape' | 'portrait';
-declare type Listener = () => void;
+type DeviceType = 'mobile' | 'tablet' | 'desktop';
+type DeviceOrientation = 'landscape' | 'portrait';
+type Listener = () => void;
 declare class Device {
     width: number;
     height: number;

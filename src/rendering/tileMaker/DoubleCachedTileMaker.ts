@@ -1,7 +1,13 @@
 import { Object3D } from 'three'
 import { MaterialPassType } from '../../helpers/materials/materialLib'
 import TileMaker from './TileMaker'
-import { ceilPowerOfTwo } from 'three/src/math/MathUtils'
+
+function ceilPowerOfTwo(value: number) {
+  if (value <= 1) {
+    return 1
+  }
+  return Math.pow(2, Math.ceil(Math.log2(value)))
+}
 
 export default class DoubleCachedTileMaker extends TileMaker {
   protected _precacher: TileMaker

@@ -1,3 +1,20 @@
+export { default as JITTileSampler } from './rendering/tileMaker/mapTileMaker/JITTileSampler';
+export { default as MapTileMaker, mapTileVisualPropertyLookupStrings } from './rendering/tileMaker/mapTileMaker/MapTileMaker';
+export { default as MapScrollingView } from './helpers/utils/MapScrollingView';
+export { default as TextureCachingScroller } from './rendering/TextureCachingScroller';
+export { default as TileMaker } from './rendering/tileMaker/TileMaker';
+export { BasicFullScreenMaterial } from './materials/BasicFullScreenMaterial';
+export { SimplexNoiseMaterial } from './materials/SimplexNoiseMaterial';
+export { BasicTextureMaterial } from './materials/BasicTextureMaterial';
+export { default as FibonacciSphereGeometry } from './geometries/FibonacciSphereGeometry';
+export { getMeshMaterial, getMeshMaterial as getMaterial } from './helpers/materials/materialLib';
+export { PegboardMesh } from './helpers/meshes/PegboardMesh';
+export { default as LandscapeTileIndex3D } from './helpers/utils/LandscapeTileIndex3D';
+export { default as Memoize3D } from './helpers/utils/Memoize3D';
+export { TILES } from './helpers/utils/tilesEnum';
+export { LightController } from './mapCache/PointLightRenderer';
+export { SpriteController } from './rendering/tileMaker/spriteMaker/JITSpriteSampler';
+export { createMapCacheViewPlane } from './helpers/utils/createMapCacheViewPlane';
 import JITTileSampler from './rendering/tileMaker/mapTileMaker/JITTileSampler';
 import MapTileMaker from './rendering/tileMaker/mapTileMaker/MapTileMaker';
 import MapScrollingView from './helpers/utils/MapScrollingView';
@@ -8,6 +25,7 @@ import { SimplexNoiseMaterial } from './materials/SimplexNoiseMaterial';
 import { BasicTextureMaterial } from './materials/BasicTextureMaterial';
 import FibonacciSphereGeometry from './geometries/FibonacciSphereGeometry';
 import { getMeshMaterial } from './helpers/materials/materialLib';
+import type { CuratedMaterialType as CuratedMaterialTypeInternal, MaterialPassType as MaterialPassTypeInternal } from './helpers/materials/materialLib';
 import { PegboardMesh } from './helpers/meshes/PegboardMesh';
 import LandscapeTileIndex3D from './helpers/utils/LandscapeTileIndex3D';
 import Memoize3D from './helpers/utils/Memoize3D';
@@ -15,12 +33,26 @@ import { TILES } from './helpers/utils/tilesEnum';
 import { LightController } from './mapCache/PointLightRenderer';
 import { SpriteController } from './rendering/tileMaker/spriteMaker/JITSpriteSampler';
 import { createMapCacheViewPlane } from './helpers/utils/createMapCacheViewPlane';
-declare const _default: {
+export type CuratedMaterialType = CuratedMaterialTypeInternal;
+export type MaterialPassType = MaterialPassTypeInternal;
+export declare const geometry: {
+    FibonacciSphereGeometry: typeof FibonacciSphereGeometry;
+};
+export declare const helpers: {
+    createMapCacheViewPlane: typeof createMapCacheViewPlane;
+};
+export declare const materials: {
+    BasicFullScreenMaterial: typeof BasicFullScreenMaterial;
+    SimplexNoiseMaterial: typeof SimplexNoiseMaterial;
+    BasicTextureMaterial: typeof BasicTextureMaterial;
+};
+declare const legacyApi: {
     TileMaker: typeof TileMaker;
     MapTileMaker: typeof MapTileMaker;
     JITTileSampler: typeof JITTileSampler;
     MapScrollingView: typeof MapScrollingView;
     TextureCachingScroller: typeof TextureCachingScroller;
+    MaterialPassType: MaterialPassTypeInternal;
     geometry: {
         FibonacciSphereGeometry: typeof FibonacciSphereGeometry;
     };
@@ -41,4 +73,4 @@ declare const _default: {
         BasicTextureMaterial: typeof BasicTextureMaterial;
     };
 };
-export default _default;
+export default legacyApi;

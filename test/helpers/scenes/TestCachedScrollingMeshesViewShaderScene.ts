@@ -4,7 +4,7 @@ import {
   HemisphereLight,
   Mesh,
   OrthographicCamera,
-  PlaneBufferGeometry,
+  PlaneGeometry,
   Scene,
   WebGLRenderer
 } from 'three'
@@ -24,7 +24,7 @@ export default class TestCachedScrollingMeshesViewShaderScene extends BaseTest2D
   constructor() {
     super()
 
-    const geo = new PlaneBufferGeometry(1, 1)
+    const geo = new PlaneGeometry(1, 1)
     const textureCachingScroller = new lib.TextureCachingScroller(
       (renderer) => {
         renderer.render(this.testRoom, this.testCamera)

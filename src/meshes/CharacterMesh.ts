@@ -1,4 +1,4 @@
-import { Mesh, SphereBufferGeometry } from 'three'
+import { Mesh, SphereGeometry } from 'three'
 import { makeScoopMesh } from '~/helpers/utils/scoopMesh'
 import { materialLibrary } from '~/materials/library'
 
@@ -9,7 +9,7 @@ let universalCharRenderOrder = 13
 export default class CharacterMesh extends KeyButtonMesh {
   constructor(w: number, h: number, label = '') {
     super(w, h, w, label, 0.01)
-    const geo = new SphereBufferGeometry(0.045, 16, 8)
+    const geo = new SphereGeometry(0.045, 16, 8)
     const posArr = geo.attributes.position.array as number[]
     for (let i = 1; i < posArr.length; i += 3) {
       if (posArr[i] < 0) {

@@ -3,7 +3,7 @@ export default class StepHelper3D implements IHelper3D {
     private _helper;
     private _thresh;
     constructor(_helper: IHelper3D, _thresh?: number);
-    getValue(x: number, y: number, z: number): 1 | 0;
+    getValue(x: number, y: number, z: number): 0 | 1;
     setValue(x: number, y: number, z: number, value: number): void;
     invalidate(x: number, y: number, z: number): void;
 }

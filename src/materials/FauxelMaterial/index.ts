@@ -8,7 +8,7 @@ import {
   Vector3,
   Vector4
 } from 'three'
-import { lerp } from 'three/src/math/MathUtils'
+import { lerp } from '../../utils/math'
 import { buildParameters } from '../../utils/jsUtils'
 import { wrap } from '../../utils/math'
 import { getTempTexture } from '../../utils/threeUtils'

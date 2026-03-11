@@ -1,4 +1,4 @@
-import { Color, Mesh, MeshBasicMaterial, SphereBufferGeometry } from 'three'
+import { Color, Mesh, MeshBasicMaterial, SphereGeometry } from 'three'
 import { Easing } from '~/animation/Easing'
 import { AnimatedBool } from '~/utils/AnimatedBool'
 import { createMaterial } from '~/utils/colors'
@@ -34,7 +34,7 @@ export class Ball extends NoduleSphere {
 
     if (useCustomCollider) {
       this.collider = new Mesh(
-        new SphereBufferGeometry(0.8, 6, 4),
+        new SphereGeometry(0.8, 6, 4),
         new MeshBasicMaterial({
           color: 0xff0000,
           wireframe: true,

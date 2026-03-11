@@ -1,12 +1,12 @@
 import {
-  BoxBufferGeometry,
+  BoxGeometry,
   DirectionalLight,
   HemisphereLight,
   Mesh,
   MeshStandardMaterial,
   PerspectiveCamera,
-  PlaneBufferGeometry,
-  SphereBufferGeometry,
+  PlaneGeometry,
+  SphereGeometry,
   WebGLRenderer
 } from 'three'
 import { FPSControls } from '../../utils/fpsControls'
@@ -37,7 +37,7 @@ export default class TestLightingScene extends BaseTestScene {
       })
       if (testFloor) {
         const floor = new Mesh(
-          new PlaneBufferGeometry(1, 1, 1, 1),
+          new PlaneGeometry(1, 1, 1, 1),
           basicMaterial
         )
         floor.scale.multiplyScalar(10)
@@ -49,7 +49,7 @@ export default class TestLightingScene extends BaseTestScene {
       }
       if (testShapes) {
         const sphere = new Mesh(
-          new SphereBufferGeometry(radius, 32, 16),
+          new SphereGeometry(radius, 32, 16),
           basicMaterial
         )
         sphere.castShadow = true
@@ -59,7 +59,7 @@ export default class TestLightingScene extends BaseTestScene {
         sphere.name = 'Sphere'
         this.scene.add(sphere)
         const box = new Mesh(
-          new BoxBufferGeometry(unitSize, unitSize, unitSize),
+          new BoxGeometry(unitSize, unitSize, unitSize),
           basicMaterial
         )
         box.castShadow = true

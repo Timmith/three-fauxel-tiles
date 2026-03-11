@@ -1,5 +1,5 @@
 import { BufferAttribute, Object3D } from 'three'
-import { Material, Mesh, PlaneBufferGeometry, Vector3 } from 'three'
+import { Material, Mesh, PlaneGeometry, Vector3 } from 'three'
 import { lerp, unlerp } from '../utils/math'
 import { detRandWater } from '../utils/random'
 
@@ -31,7 +31,7 @@ const originalVec3 = new Vector3()
 const basis = 34
 
 export function makeWater(mat: Material, time = 0, maxStrength = 0.15) {
-  const geo = new PlaneBufferGeometry(basis, basis, basis, basis)
+  const geo = new PlaneGeometry(basis, basis, basis, basis)
   const posAttr = geo.attributes.position
   const posArr = posAttr.array as Float32Array
   const normalAttr = geo.attributes.normal

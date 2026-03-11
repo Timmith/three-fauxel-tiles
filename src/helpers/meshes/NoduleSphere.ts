@@ -1,10 +1,10 @@
-import { Material, Mesh, SphereBufferGeometry } from 'three'
+import { Material, Mesh, SphereGeometry } from 'three'
 import { rand } from '~/utils/math'
 
-let __geo: SphereBufferGeometry
+let __geo: SphereGeometry
 function getGeo() {
   if (!__geo) {
-    __geo = new SphereBufferGeometry(1, 32, 16)
+    __geo = new SphereGeometry(1, 32, 16)
   }
   return __geo
 }

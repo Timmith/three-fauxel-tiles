@@ -2,7 +2,7 @@ import {
   Color,
   Mesh,
   OrthographicCamera,
-  PlaneBufferGeometry,
+  PlaneGeometry,
   Scene,
   WebGLRenderer
 } from 'three'
@@ -21,7 +21,7 @@ export default class TestCachedScrollingNoiseViewShaderScene extends BaseTest2DS
   constructor() {
     super()
 
-    const geo = new PlaneBufferGeometry(1, 1)
+    const geo = new PlaneGeometry(1, 1)
     const color = new Color(1, 1, 0.4)
     this.color = color
     const textureCachingScroller = new lib.TextureCachingScroller(

@@ -1,6 +1,6 @@
 import {
   BufferGeometry,
-  CylinderBufferGeometry,
+  CylinderGeometry,
   Material,
   Mesh,
   Object3D,
@@ -27,7 +27,7 @@ export function makeTreeMapleStumpMature(matBark: Material, matWood: Material) {
 
   //trunk
   const wood = new Mesh(
-    new CylinderBufferGeometry(baseRadius, baseRadius, height, 16),
+    new CylinderGeometry(baseRadius, baseRadius, height, 16),
     matWood
   )
   pivot.add(wood)
@@ -64,7 +64,7 @@ export function makeTreeMapleStump(matBark: Material, matWood: Material) {
 
   //trunk
   const wood = new Mesh(
-    new CylinderBufferGeometry(baseRadius, baseRadius, height, 16),
+    new CylinderGeometry(baseRadius, baseRadius, height, 16),
     matWood
   )
   pivot.add(wood)
@@ -106,7 +106,7 @@ export function makeTreeMapleMature(
 
   //trunk
   const wood = new Mesh(
-    new CylinderBufferGeometry(baseRadius, baseRadius, height, 16),
+    new CylinderGeometry(baseRadius, baseRadius, height, 16),
     matWood
   )
   pivot.add(wood)
@@ -206,7 +206,7 @@ export function makeTreeMaple(matBark: Material, matLeaf: Material) {
   return mergeMeshes(pivot)
 }
 
-const __twigGeos = new Map<string, CylinderBufferGeometry>()
+const __twigGeos = new Map<string, CylinderGeometry>()
 function __getTwigGeo(
   radiusTop: number,
   radiusBottom: number,
@@ -215,14 +215,14 @@ function __getTwigGeo(
 ) {
   const key = `${radiusTop}:${radiusBottom}:${length}:${radialSegs}`
   if (!__twigGeos.has(key)) {
-    const twigGeo = new CylinderBufferGeometry(
+    const twigGeo = new CylinderGeometry(
       radiusTop,
       radiusBottom,
       length,
       radialSegs,
       1
     )
-    const twigPosArr = twigGeo.attributes.position.array as number[]
+    const twigPosArr = twigGeo.attributes.position.array as Float32Array
     const vec = new Vector3()
     for (let i3 = 0; i3 < twigPosArr.length; i3 += 3) {
       vec.fromArray(twigPosArr, i3)
@@ -238,7 +238,7 @@ let __leafGeo: BufferGeometry | undefined
 function __getLeafGeo() {
   if (!__leafGeo) {
     __leafGeo = getChamferedBoxGeometry(3, 3, 4, 1)
-    const posArr = __leafGeo.attributes.position.array as number[]
+    const posArr = __leafGeo.attributes.position.array as Float32Array
     const vec = new Vector3()
     for (let i3 = 0; i3 < posArr.length; i3 += 3) {
       vec.fromArray(posArr, i3)

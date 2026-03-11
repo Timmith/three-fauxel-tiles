@@ -1,11 +1,11 @@
 import {
   BufferGeometry,
-  CylinderBufferGeometry,
+  CylinderGeometry,
   Material,
   Mesh,
   Object3D,
   Raycaster,
-  SphereBufferGeometry,
+  SphereGeometry,
   Vector3
 } from 'three'
 import {
@@ -28,7 +28,7 @@ export function makeTreePineStumpMature(matBark: Material, matWood: Material) {
 
   //trunk
   const wood = new Mesh(
-    new CylinderBufferGeometry(baseRadius, baseRadius, height, 16),
+    new CylinderGeometry(baseRadius, baseRadius, height, 16),
     matWood
   )
   pivot.add(wood)
@@ -65,7 +65,7 @@ export function makeTreePineStump(matBark: Material, matWood: Material) {
 
   //trunk
   const wood = new Mesh(
-    new CylinderBufferGeometry(baseRadius, baseRadius, height, 16),
+    new CylinderGeometry(baseRadius, baseRadius, height, 16),
     matWood
   )
   pivot.add(wood)
@@ -107,7 +107,7 @@ export function makeTreePineMature(
 
   //trunk
   const wood = new Mesh(
-    new CylinderBufferGeometry(baseRadius, baseRadius, height, 16),
+    new CylinderGeometry(baseRadius, baseRadius, height, 16),
     matWood
   )
   pivot.add(wood)
@@ -263,7 +263,7 @@ let __needleGeo: BufferGeometry | undefined
 function __getNeedleGeo() {
   if (!__needleGeo) {
     __needleGeo = getChamferedBoxGeometry(2, 4, 2, 1)
-    const posArr = __needleGeo.attributes.position.array as number[]
+    const posArr = __needleGeo.attributes.position.array as Float32Array
     const vec = new Vector3()
     for (let i3 = 0; i3 < posArr.length; i3 += 3) {
       vec.fromArray(posArr, i3)
@@ -293,11 +293,11 @@ function __addPineNeedles(
   }
 }
 
-const __twigGeos = new Map<number, CylinderBufferGeometry>()
+const __twigGeos = new Map<number, CylinderGeometry>()
 function __getTwigGeo(twigLength: number) {
   if (!__twigGeos.has(twigLength)) {
-    const twigGeo = new CylinderBufferGeometry(1, 1, twigLength, 8, 1)
-    const twigPosArr = twigGeo.attributes.position.array as number[]
+    const twigGeo = new CylinderGeometry(1, 1, twigLength, 8, 1)
+    const twigPosArr = twigGeo.attributes.position.array as Float32Array
     const vec = new Vector3()
     for (let i3 = 0; i3 < twigPosArr.length; i3 += 3) {
       vec.fromArray(twigPosArr, i3)

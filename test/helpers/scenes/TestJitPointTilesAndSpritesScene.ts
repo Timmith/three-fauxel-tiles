@@ -1,12 +1,12 @@
 import {
   Color,
-  GammaEncoding,
   Mesh,
   MeshBasicMaterial,
   NearestFilter,
   OrthographicCamera,
   PlaneGeometry,
   RepeatWrapping,
+  SRGBColorSpace,
   Scene,
   Vector2,
   Vector3,
@@ -1035,7 +1035,7 @@ export default class TestJitPointTilesAndSpritesScene extends BaseTestScene {
       {
         minFilter: NearestFilter,
         magFilter: NearestFilter,
-        encoding: GammaEncoding,
+        colorSpace: SRGBColorSpace,
         wrapS: RepeatWrapping,
         wrapT: RepeatWrapping,
         generateMipmaps: false

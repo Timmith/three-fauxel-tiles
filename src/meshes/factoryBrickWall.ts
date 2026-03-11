@@ -1,4 +1,4 @@
-import { BoxBufferGeometry, Material, Mesh, Object3D } from 'three'
+import { BoxGeometry, Material, Mesh, Object3D } from 'three'
 import { getChamferedBoxGeometry } from '../utils/geometry'
 import { mergeMeshes } from '../utils/mergeMeshes'
 
@@ -28,7 +28,7 @@ export function makeBrickWall(
     }
   }
   const mortar = new Mesh(
-    new BoxBufferGeometry((colEnd - colStart) * brickSpacingX - 1, 32, 1),
+    new BoxGeometry((colEnd - colStart) * brickSpacingX - 1, 32, 1),
     mortarMat
   )
   mortar.position.x = -1

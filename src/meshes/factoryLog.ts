@@ -1,4 +1,4 @@
-import { CylinderBufferGeometry, Mesh, Object3D } from 'three'
+import { CylinderGeometry, Mesh, Object3D } from 'three'
 import { getMeshMaterial } from '../helpers/materials/materialLib'
 import { getCachedChamferedBoxGeometry } from '../utils/geometry'
 import { detRandLogPine } from '../utils/random'
@@ -7,7 +7,7 @@ export function makeLog(radius = 8, height = 40) {
   const radiusInner = radius * 0.75
   const pivot = new Object3D()
   const wood = new Mesh(
-    new CylinderBufferGeometry(radiusInner, radiusInner, height, 16, 1),
+    new CylinderGeometry(radiusInner, radiusInner, height, 16, 1),
     getMeshMaterial('wood')
   )
   pivot.add(wood)

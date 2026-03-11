@@ -1,12 +1,11 @@
 import {
-  BoxBufferGeometry,
+  BoxGeometry,
   Material,
   Mesh,
   Object3D,
   Raycaster,
-  SphereBufferGeometry,
   SphereGeometry,
-  TorusKnotBufferGeometry,
+  TorusKnotGeometry,
   Vector3,
   Vector4,
   WebGLRenderer
@@ -46,7 +45,7 @@ import { makeBrickWall } from '../../../meshes/factoryBrickWall'
 import DoubleCachedTileMaker from '../DoubleCachedTileMaker'
 import { makeWater } from '../../../meshes/factoryWater'
 import { makeSandQuad } from '../../../meshes/factorySand'
-import { lerp } from 'three/src/math/MathUtils'
+import { lerp } from '../../../utils/math'
 import { makeDirtQuad } from '../../../meshes/factoryDirt'
 import { getCachedSphereGeometry } from '../../../utils/geometry'
 import { findOnlyVisibleMeshes } from '../../../utils/isVisible'
@@ -402,7 +401,7 @@ export default class MapTileMaker extends DoubleCachedTileMaker {
     const cyberGlowMat = getMeshMaterial('cyberGlow')
     const cyberPanelMat = getMeshMaterial('cyberPanel')
     const nothingness = () => {
-      const obj = new Mesh(new BoxBufferGeometry(32, 2, 32), cyberGlowMat)
+      const obj = new Mesh(new BoxGeometry(32, 2, 32), cyberGlowMat)
       obj.position.y = -1
 
       const protoPanel = new Mesh(
@@ -448,7 +447,7 @@ export default class MapTileMaker extends DoubleCachedTileMaker {
       floorBoardPair.add(floorBoard2)
       floorBoard.position.z = -16
       floorBoard2.position.z = 16
-      const floor = new Mesh(new BoxBufferGeometry(32, 2, 32), floorMat)
+      const floor = new Mesh(new BoxGeometry(32, 2, 32), floorMat)
       detRandWoodPlanks()
       for (let i = 0; i < 4; i++) {
         const c = floorBoardPair.clone()
@@ -462,7 +461,7 @@ export default class MapTileMaker extends DoubleCachedTileMaker {
 
     //brick walls
 
-    const drywall = new Mesh(new BoxBufferGeometry(32, 32, 2), drywallMat)
+    const drywall = new Mesh(new BoxGeometry(32, 32, 2), drywallMat)
     const getBrickWall = memoize(() =>
       makeBrickWall(brickMat, mortarMat, -1, 1)
     )
@@ -870,7 +869,7 @@ export default class MapTileMaker extends DoubleCachedTileMaker {
 
     const testObject = () => {
       const obj = new Mesh(
-        new TorusKnotBufferGeometry(10, 2, 48, 8),
+        new TorusKnotGeometry(10, 2, 48, 8),
         getMeshMaterial('plastic')
       )
       obj.position.y = 12

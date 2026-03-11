@@ -1,4 +1,4 @@
-import { BufferGeometry, Mesh, OrthographicCamera, PlaneBufferGeometry, Scene, WebGLRenderer, WebGLRenderTarget } from 'three';
+import { BufferGeometry, Mesh, OrthographicCamera, PlaneGeometry, Scene, WebGLRenderer, WebGLRenderTarget } from 'three';
 import { MaterialPassType } from '../helpers/materials/materialLib';
 import JITSpriteSampler from '../rendering/tileMaker/spriteMaker/JITSpriteSampler';
 import MapCacheRenderer from '../mapCache/MapCacheRenderer';
@@ -14,7 +14,7 @@ export default class MapWithSpritesCacheRenderer {
     spriteTopPointsGeo: BufferGeometry;
     private _pointsTopMaterial;
     private _pointsBottomMaterial;
-    backdrop: Mesh<PlaneBufferGeometry, BasicTextureMaterial>;
+    backdrop: Mesh<PlaneGeometry, BasicTextureMaterial>;
     offsetX: number;
     offsetY: number;
     private _backdropUvST;

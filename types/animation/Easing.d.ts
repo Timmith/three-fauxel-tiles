@@ -52,4 +52,4 @@ export declare const Easing: {
     };
 };
 export declare function makeEaseOutIn(inOut: Ease): (k: number) => number;
-export declare type Ease = (k: number) => number;
+export type Ease = (k: number) => number;
