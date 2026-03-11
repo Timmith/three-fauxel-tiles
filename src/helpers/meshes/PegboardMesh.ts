@@ -9,6 +9,7 @@ export class PegboardMesh extends Mesh {
     const geo = new PegboardGeometry(densityResolver)
     const mat = new PegboardMeshMaterial({ smoothOffset: geo.smoothOffset })
     super(geo, mat)
+    this.frustumCulled = false
     this.playerCoord = geo.playerCoord
     this._geo = geo
   }

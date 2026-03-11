@@ -22,7 +22,14 @@ export async function loadJson(url: string): Promise<object> {
   return new Promise<object>((resolve, reject) =>
     getFileLoader().load(
       url,
-      (fileContents: string) => resolve(JSON.parse(fileContents)),
+      (fileContents: string | ArrayBuffer) =>
+        resolve(
+          JSON.parse(
+            typeof fileContents === "string"
+              ? fileContents
+              : new TextDecoder().decode(fileContents)
+          )
+        ),
       undefined,
       reject
     )
@@ -33,7 +40,12 @@ export async function loadText(url: string): Promise<string> {
   return new Promise<string>((resolve, reject) =>
     getFileLoader().load(
       url,
-      (fileContents: string) => resolve(fileContents),
+      (fileContents: string | ArrayBuffer) =>
+        resolve(
+          typeof fileContents === "string"
+            ? fileContents
+            : new TextDecoder().decode(fileContents)
+        ),
       undefined,
       reject
     )

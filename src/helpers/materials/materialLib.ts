@@ -386,7 +386,8 @@ export function changeMeshMaterials(
         const mat = getMeshMaterial(node.material.name, pass)
         node.material = mat
         if (node.material instanceof WorldNormalMeshMaterial) {
-          node.onBeforeRender = __onBeforeRenderDoUpdateWorldNormals
+          node.onBeforeRender =
+            __onBeforeRenderDoUpdateWorldNormals as typeof node.onBeforeRender
         }
       }
     }

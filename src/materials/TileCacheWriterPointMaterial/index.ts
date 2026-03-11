@@ -27,6 +27,7 @@ export interface TileCacheWriterPointMaterialParameters {
   z: number
   useXYZ: boolean
   zSlideScale: number
+  zColorScale: number
 }
 
 const __defaultParams: TileCacheWriterPointMaterialParameters = {
@@ -38,7 +39,8 @@ const __defaultParams: TileCacheWriterPointMaterialParameters = {
   pixelsPerCacheEdge: 2048,
   z: 0,
   useXYZ: false,
-  zSlideScale: 1
+  zSlideScale: 1,
+  zColorScale: 1
 }
 
 export class TileCacheWriterPointMaterial extends RawShaderMaterial {

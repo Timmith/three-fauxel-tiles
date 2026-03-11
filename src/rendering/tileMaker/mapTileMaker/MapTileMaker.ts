@@ -49,9 +49,9 @@ import { makeSandQuad } from '../../../meshes/factorySand'
 import { lerp } from 'three/src/math/MathUtils'
 import { makeDirtQuad } from '../../../meshes/factoryDirt'
 import { getCachedSphereGeometry } from '../../../utils/geometry'
-import { findOnlyVisibleMeshes } from '../../../../test/utils/isVisible'
+import { findOnlyVisibleMeshes } from '../../../utils/isVisible'
 import { mergeMeshes } from '../../../utils/mergeMeshes'
-import { getUrlFlag, getUrlParam } from '../../../../test/utils/location'
+import { getUrlFlag, getUrlParam } from '../../../utils/location'
 import { makeLog } from '../../../meshes/factoryLog'
 
 const slicknessByName: { [K in CuratedMaterialType]: number } = {
@@ -100,8 +100,7 @@ function getSlickness(materialName: string) {
   }
 }
 
-export default class MapTileMaker extends DoubleCachedTileMaker {
-  visualPropertyLookupStrings = [
+export const mapTileVisualPropertyLookupStrings = [
     'layer2',
     'nothingness',
     'floor',
@@ -386,7 +385,12 @@ export default class MapTileMaker extends DoubleCachedTileMaker {
     'sand63',
     'testObject'
   ] as const
-  private _listenersForUpdatedTiles: ((index: number) => void)[] = []
+
+export default class MapTileMaker extends DoubleCachedTileMaker {
+  get visualPropertyLookupStrings() {
+    return mapTileVisualPropertyLookupStrings
+  }
+  private _listenersForUpdatedTiles: ((index: number) => void)[]
   public isIndexStillOnScreen: ((index: number) => boolean) | undefined
   constructor(
     pixelsPerTile = 32,
@@ -1380,6 +1384,7 @@ export default class MapTileMaker extends DoubleCachedTileMaker {
     indexedMeshes.push(testObject)
 
     super(pixelsPerTile, pixelsPerCacheEdge, passes, indexedMeshes)
+    this._listenersForUpdatedTiles = []
   }
 
   render(renderer: WebGLRenderer) {
@@ -1494,7 +1499,6 @@ export default class MapTileMaker extends DoubleCachedTileMaker {
         }
       }
       renderer.setPixelRatio(backupPixelRatio)
-      console.log(duration)
       renderer.setViewport(oldViewport)
       renderer.setScissor(oldScissor)
       renderer.setRenderTarget(null)

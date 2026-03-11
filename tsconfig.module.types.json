@@ -1,10 +1,13 @@
 {
     "compilerOptions": {
-      "target": "es5",
-      "module": "commonjs",
+      "target": "es2017",
+      "module": "esnext",
+      "moduleResolution": "node",
       "declaration": true,
       "outDir": "./types",
+      "downlevelIteration": true,
       "strict": true,
+      "strictPropertyInitialization": false,
       "typeRoots": [
         "node_modules/@types",
         "src/typings"
@@ -16,5 +19,6 @@
         "~/*": ["src/*"]
       }
     },
+    "include": ["src/index.ts", "src/typings/**/*.d.ts"],
     "exclude": ["node_modules", "**/__tests__/*", "test"]
   }

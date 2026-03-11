@@ -27,7 +27,6 @@ export interface PointLightPointMaterialParameters {
   z: number
   useShadows: boolean
   shadowResolution: number
-  Í
 }
 
 const __defaultParams: PointLightPointMaterialParameters = {
@@ -38,8 +37,8 @@ const __defaultParams: PointLightPointMaterialParameters = {
   viewWidth: 1024,
   viewHeight: 1024,
   pixelsPerTile: 32,
-  relativeTileSize: 1 / 16, //one over the number of tiles in view
-  relativePixelSize: 1 / 512, //one over the number of pixels in view
+  relativeTileSize: 1 / 16,
+  relativePixelSize: 1 / 512,
   pixelsPerCacheEdge: 2048,
   z: 0,
   useShadows: true,

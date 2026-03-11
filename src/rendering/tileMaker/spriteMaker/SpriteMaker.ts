@@ -6,8 +6,6 @@ import {
   Vector4,
   WebGLRenderer
 } from 'three'
-import { skeletonMaterialNames } from '../../../../test/helpers/skeletonMaterialNames'
-import { wheelBarrowMaterialNames } from '../../../../test/helpers/wheelBarrowMaterialNames'
 import { verticalScale } from '../../../constants'
 import {
   changeMeshMaterials,
@@ -21,9 +19,13 @@ import { makeWheelBarrow } from '../../../meshes/factoryWheelBarrow'
 import { getChamferedBoxGeometry } from '../../../utils/geometry'
 import { memoize } from '../../../utils/memoizer'
 import TileMaker from '../TileMaker'
+import {
+  skeletonMaterialNames,
+  wheelBarrowMaterialNames
+} from './materialNames'
 
 export default class SpriteMaker extends TileMaker {
-  private _angleRegistry: number[] = []
+  private _angleRegistry: number[]
   constructor(
     pixelsPerTile = 32,
     pixelsPerCacheEdge = 2048,
@@ -196,6 +198,7 @@ export default class SpriteMaker extends TileMaker {
 
     super(pixelsPerTile, pixelsPerCacheEdge, passes, indexedMeshes)
 
+    this._angleRegistry = []
     this._pivot.scale.multiplyScalar(0.5)
   }
 

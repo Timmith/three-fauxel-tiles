@@ -2,6 +2,7 @@ import JITTileSampler from './rendering/tileMaker/mapTileMaker/JITTileSampler'
 import MapTileMaker from './rendering/tileMaker/mapTileMaker/MapTileMaker'
 import MapScrollingView from './helpers/utils/MapScrollingView'
 import TextureCachingScroller from './rendering/TextureCachingScroller'
+import TileMaker from './rendering/tileMaker/TileMaker'
 
 import { BasicFullScreenMaterial } from './materials/BasicFullScreenMaterial'
 import { SimplexNoiseMaterial } from './materials/SimplexNoiseMaterial'
@@ -16,6 +17,7 @@ import { LightController } from './mapCache/PointLightRenderer'
 import { SpriteController } from './rendering/tileMaker/spriteMaker/JITSpriteSampler'
 import { createMapCacheViewPlane } from './helpers/utils/createMapCacheViewPlane'
 export default {
+  TileMaker,
   MapTileMaker,
   JITTileSampler,
   MapScrollingView,
@@ -28,6 +30,7 @@ export default {
   },
   LightController,
   SpriteController,
+  getMaterial: getMeshMaterial,
   getMeshMaterial,
   PegboardMesh,
   LandscapeTileIndex3D,

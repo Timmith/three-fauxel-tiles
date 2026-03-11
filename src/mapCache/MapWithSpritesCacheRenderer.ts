@@ -106,7 +106,6 @@ export default class MapWithSpritesCacheRenderer {
       depthSortByY: true,
       useXYZ: true
     }
-    console.log('pass ' + pass)
     const pointsBottomMaterial = new TileCacheWriterPointMaterial(matParams)
     const pointsBottom = new Points(tileBottomPointsGeo, pointsBottomMaterial)
     this._pointsBottomMaterial = pointsBottomMaterial

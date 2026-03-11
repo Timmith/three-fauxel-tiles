@@ -293,7 +293,7 @@ export default class PegboardGeometry extends BufferGeometry {
     const screenOffsetZ = new Vector2(0, 16)
 
     const setDrawRange = this.setDrawRange.bind(this)
-    const axes: string[] = []
+    const axes: Array<keyof typeof __tileIndexOffsetLookup> = []
     const occupiers: number[] = []
 
     const centerView = new Vector3()
@@ -353,7 +353,7 @@ export default class PegboardGeometry extends BufferGeometry {
 
           const winding = __windings[windex]
           let iSub = 0
-          let axis = winding[1]
+          let axis = winding[1] as keyof typeof __tileIndexOffsetLookup
           const depthToGo = size + predepth
           occupiers.length = 0
           axes.length = 0
@@ -415,7 +415,7 @@ export default class PegboardGeometry extends BufferGeometry {
             }
 
             iSub = (d % 3) * 2
-            axis = winding[iSub + 1]
+            axis = winding[iSub + 1] as keyof typeof __tileIndexOffsetLookup
 
             switch (winding[iSub]) {
               case '+':

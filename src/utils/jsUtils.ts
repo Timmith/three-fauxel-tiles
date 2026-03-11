@@ -28,9 +28,9 @@ export function boobyTrap<O, T extends keyof O>(
 export const decorateMethodBefore = (
   obj: any,
   methodName: string,
-  newMethod: () => void
+  newMethod: (...args: any[]) => void
 ) => {
-  const oldMethod = obj[methodName] as () => void
+  const oldMethod = obj[methodName] as (...args: any[]) => any
   obj[methodName] = function decoratedMethodBefore(...args: any[]) {
     newMethod.apply(this, args)
     const result = oldMethod.apply(this, args)
@@ -44,9 +44,9 @@ export const decorateMethodBefore = (
 export const decorateMethodAfter = (
   obj: any,
   methodName: string,
-  newMethod: () => void
+  newMethod: (...args: any[]) => void
 ) => {
-  const oldMethod = obj[methodName] as () => void
+  const oldMethod = obj[methodName] as (...args: any[]) => any
   obj[methodName] = function decoratedMethodAfter(...args: any[]) {
     const result = oldMethod.apply(this, args)
     newMethod.apply(this, args)

@@ -1,23 +1,26 @@
-import { serve } from "esbuild";
-import { glsl } from "esbuild-plugin-glsl";
+import { context } from 'esbuild'
+import { glsl } from 'esbuild-plugin-glsl'
 
-serve({
-    servedir: 'test-www',
-    port: 8002
-  }, {
-    entryPoints: ['test/index.ts'],
-    outdir: 'test-www',
-    bundle: true,
-    sourcemap: true,
-    minify: true,
-    splitting: true,
-    format: 'esm',
-    target: ['esnext'],
-    tsconfig: './tsconfig.test.json',
-    plugins: [
-        glsl({
-            minify: false
-        })
-    ]
-  })
-  .catch(() => process.exit(1));
+const ctx = await context({
+  entryPoints: ['test/index.ts'],
+  outdir: 'test-www',
+  bundle: true,
+  sourcemap: true,
+  minify: true,
+  splitting: true,
+  format: 'esm',
+  target: ['esnext'],
+  tsconfig: './tsconfig.test.json',
+  plugins: [
+    glsl({
+      minify: false
+    })
+  ]
+})
+
+await ctx.serve({
+  servedir: 'test-www',
+  port: 8002
+})
+
+await new Promise(() => {})

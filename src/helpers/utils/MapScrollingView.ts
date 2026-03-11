@@ -13,8 +13,8 @@ import { sunOffset, sunSpeed } from '../../constants'
 
 import MapWithSpritesCacheRenderer from '../../mapCache/MapWithSpritesCacheRenderer'
 import PointLightRenderer from '../../mapCache/PointLightRenderer'
-import { getSharedRectangleGeometry } from '../../../test/utils/geometry'
-import { getUrlFlag } from '../../../test/utils/location'
+import { getSharedRectangleGeometry } from '../../utils/geometry'
+import { getUrlFlag } from '../../utils/location'
 export default class MapScrollingView {
   tileMaker: MapTileMaker
   spriteMaker: SpriteMaker
@@ -27,7 +27,7 @@ export default class MapScrollingView {
   mapCachePassViews: Mesh[]
   private _noiseMaker: NoiseTextureMaker
   mapCacheFinalView: Mesh
-  private _noiseReady: boolean
+  private _noiseReady = false
   private _mapScrollingViewMaterial: FauxelMaterial
   public get offsetX(): number {
     return this.jitTileSampler.offsetX

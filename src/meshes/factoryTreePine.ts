@@ -294,7 +294,7 @@ function __addPineNeedles(
 }
 
 const __twigGeos = new Map<number, CylinderBufferGeometry>()
-function __getTwigGeo(twigLength) {
+function __getTwigGeo(twigLength: number) {
   if (!__twigGeos.has(twigLength)) {
     const twigGeo = new CylinderBufferGeometry(1, 1, twigLength, 8, 1)
     const twigPosArr = twigGeo.attributes.position.array as number[]

@@ -17,7 +17,7 @@ import lib from '@lib/index'
 
 export default class TestJitTilesScene extends BaseTestScene {
   protected _transform: Vector3
-  private _tileMaker = new lib.TileMaker(32, 2048, ['normals'])
+  private _tileMaker = new lib.MapTileMaker(32, 2048, ['normals'])
   constructor() {
     super()
 

@@ -77,7 +77,7 @@ for (let i = 0; i < 8; i++) {
 }
 
 export class SpriteController {
-  private _animTime: number
+  private _animTime = 0
   get animTime(): number {
     return this._animTime
   }
@@ -90,7 +90,7 @@ export class SpriteController {
     this._animTime = value
     this.animFrame = ~~(value * 8)
   }
-  private _animFrame: number
+  private _animFrame = 0
   get animFrame(): number {
     return this._animFrame
   }
@@ -166,7 +166,6 @@ export default class JITSpriteSampler {
     }
     const metaProps = new NamedBitsInNumber(0, metaSpriteStrings)
     this.validateMeta(metaProps)
-    console.log('valid', metaProps.has('sheep'))
     this.metaCache.set(key, metaProps)
     return metaProps
   }

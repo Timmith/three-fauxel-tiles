@@ -1,4 +1,4 @@
-function i2hex(i) {
+function i2hex(i: number) {
   return ('0' + i.toString(16)).slice(-2)
 }
 

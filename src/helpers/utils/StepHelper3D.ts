@@ -7,4 +7,10 @@ export default class StepHelper3D implements IHelper3D {
   getValue(x: number, y: number, z: number) {
     return this._helper.getValue(x, y, z) > this._thresh ? 1 : 0
   }
+  setValue(x: number, y: number, z: number, value: number) {
+    this._helper.setValue(x, y, z, value)
+  }
+  invalidate(x: number, y: number, z: number) {
+    this._helper.invalidate(x, y, z)
+  }
 }

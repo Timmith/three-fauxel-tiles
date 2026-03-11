@@ -72,8 +72,6 @@ export default class TileMaker {
         })
       )
     }
-    console.log('performance.now', performance.now())
-
     const scene = this._scene
 
     scene.autoUpdate = false
@@ -127,7 +125,7 @@ export default class TileMaker {
   }
   getTileId(tileDescription: Uint8Array) {
     // const hash = Buffer.from(tileDescription).toString('utf-8')
-    const hash = String.fromCharCode.apply(null, tileDescription)
+    const hash = String.fromCharCode(...Array.from(tileDescription))
     let index = this._tileHashRegistry.indexOf(hash)
     if (index === -1) {
       index = this._tileRegistry.length

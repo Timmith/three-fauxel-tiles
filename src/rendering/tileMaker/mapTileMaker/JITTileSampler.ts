@@ -1,20 +1,148 @@
 import { BufferGeometry } from 'three'
-import AdditiveGroupHelper3D from '../../../helpers/utils/AdditiveGroupHelper3D'
-import ClampHelper3D from '../../../helpers/utils/ClampHelper3D'
-import { simpleThreshNoise } from '../../../helpers/utils/helper3DFactory'
 import NamedBitsInBytes from '../../../helpers/utils/NamedBitsInBytes'
 import NamedBitsInNumber from '../../../helpers/utils/NamedBitsInNumber'
 import NoiseHelper3D from '../../../helpers/utils/NoiseHelper3D'
-import StepHelper3D from '../../../helpers/utils/StepHelper3D'
-import InvertHelper3D from '../../../helpers/utils/InvertHelper3D'
 import { CardinalStrings } from '../../../meshes/factorySand'
 import { wrap } from '../../../utils/math'
 
-import MapTileMaker from './MapTileMaker'
+import MapTileMaker, { mapTileVisualPropertyLookupStrings } from './MapTileMaker'
 import LocalStorageMap from '../../../utils/LocalStorageMap'
-import BoxFilterHelper3D from '../../../helpers/utils/BoxFilterHelper3D'
+type Helper2D = {
+  getValue(x: number, y: number): number
+}
 
-const metaTileStrings = ['dirt', 'sand', 'rocks'] as const
+class NoiseHelper2D implements Helper2D {
+  private _helper: NoiseHelper3D
+  constructor(
+    scale: number,
+    offsetX = 0,
+    offsetY = 0,
+    seed = 0,
+    strength = 1,
+    offset = 0
+  ) {
+    this._helper = new NoiseHelper3D(
+      scale,
+      offsetX,
+      offsetY,
+      0,
+      seed,
+      strength,
+      offset
+    )
+  }
+  getValue(x: number, y: number) {
+    return this._helper.getValue(x, y, 0)
+  }
+}
+
+class StepHelper2D implements Helper2D {
+  constructor(private _helper: Helper2D, private _thresh = 0) {}
+  getValue(x: number, y: number) {
+    return this._helper.getValue(x, y) > this._thresh ? 1 : 0
+  }
+}
+
+class AdditiveGroupHelper2D implements Helper2D {
+  constructor(private _helpers: Helper2D[]) {}
+  getValue(x: number, y: number) {
+    let value = 0
+    for (const helper of this._helpers) {
+      value += helper.getValue(x, y)
+    }
+    return value
+  }
+}
+
+class InvertHelper2D implements Helper2D {
+  constructor(private _helper: Helper2D) {}
+  getValue(x: number, y: number) {
+    return 1 - this._helper.getValue(x, y)
+  }
+}
+
+class ClampHelper2D implements Helper2D {
+  constructor(private _helper: Helper2D, private _min = -1, private _max = 1) {}
+  getValue(x: number, y: number) {
+    const value = this._helper.getValue(x, y)
+    return Math.min(this._max, Math.max(this._min, value))
+  }
+}
+
+class BoxFilterHelper2D implements Helper2D {
+  constructor(
+    private _helper: Helper2D,
+    private _minX = -16,
+    private _maxX = 16,
+    private _minY = _minX,
+    private _maxY = _maxX
+  ) {}
+  getValue(x: number, y: number) {
+    if (
+      x < this._minX ||
+      x > this._maxX ||
+      y < this._minY ||
+      y > this._maxY
+    ) {
+      return 0
+    }
+    return this._helper.getValue(x, y)
+  }
+}
+
+function simpleThreshNoise2D(
+  scale: number,
+  offsetX: number,
+  offsetY: number,
+  thresh: number,
+  seed = 0,
+  strength?: number
+) {
+  return new StepHelper2D(
+    new NoiseHelper2D(scale, offsetX, offsetY, seed, strength),
+    thresh
+  )
+}
+
+const __animFrameTimes = ['0', '1', '2', '3'] as const
+
+type BottomAndTopIds = {
+  idTop: number
+  idBottom: number
+}
+
+type TileVisualProps = NamedBitsInBytes<typeof mapTileVisualPropertyLookupStrings>
+type TileVisualPropName = typeof mapTileVisualPropertyLookupStrings[number]
+
+const metaTileStrings = [
+  'water',
+  'dirt',
+  'sand',
+  'beach',
+  'floor',
+  'logWall',
+  'beam',
+  'bricks',
+  'drywall',
+  'grass',
+  'bush',
+  'goldPile',
+  'lampPost',
+  'testObject',
+  'pyramid',
+  'rockyGround',
+  'rocks',
+  'goldOreForRocks',
+  'silverOreForRocks',
+  'ironOreForRocks',
+  'copperOreForRocks',
+  'harvested',
+  'treePine',
+  'maturePlant',
+  'treeMaple',
+  'window',
+  'door'
+] as const
 
 type MetaTile = typeof metaTileStrings[number]
 
@@ -22,11 +150,14 @@ type NamedMetaBits = NamedBitsInNumber<typeof metaTileStrings>
 
 export default class JITTileSampler {
   indicesOfMadeTiles: Set<number> = new Set()
+  indicesOfNewlyMadeTiles: Set<number> = new Set()
+  dirty = true
   get offsetX(): number {
     return this._offsetX
   }
   set offsetX(value: number) {
     this._offsetsDirty = true
+    this.dirty = true
     this._offsetX = value
   }
   get offsetY(): number {
@@ -34,6 +165,7 @@ export default class JITTileSampler {
   }
   set offsetY(value: number) {
     this._offsetsDirty = true
+    this.dirty = true
     this._offsetY = value
   }
   get tileMaker(): MapTileMaker {
@@ -42,7 +174,7 @@ export default class JITTileSampler {
   set tileMaker(value: MapTileMaker) {
     throw new Error('Cannot change tileMaker during runtime')
   }
-  metaNoiseGenerators: StepHelper3D[]
+  metaNoiseGenerators: Helper2D[]
   bytesPerTile: number
   metaRawCache: Map<string, NamedMetaBits> = new Map() //maybe change this caching mechanism for something more memory friendly. e.i. Map<number, <Map<number, number>> ?
   metaCache: LocalStorageMap<string, NamedMetaBits> = new LocalStorageMap(
@@ -51,8 +183,26 @@ export default class JITTileSampler {
   ) //maybe change this caching mechanism for something more memory friendly. e.i. Map<number, <Map<number, number>> ?
   dirtyMeta: Set<string> = new Set()
   dirtyVis: Set<string> = new Set()
+  private _offsetsDirty = true
   private _offsetX = 0
   private _offsetY = 0
+  private _offsetXOld = 0
+  private _offsetYOld = 0
+  private _animFrame = 0
+  get animFrame() {
+    return this._animFrame
+  }
+  set animFrame(value: number) {
+    if (value === this._animFrame) {
+      return
+    }
+    this._animFrame = value
+    this.dirty = true
+  }
+  onTileMade = (index: number) => {
+    this.indicesOfNewlyMadeTiles.add(index)
+    this.dirty = true
+  }
   constructor(
     private _tileMaker: MapTileMaker,
     private _viewWidthInTiles: number,
@@ -67,8 +217,8 @@ export default class JITTileSampler {
       new BoxFilterHelper2D(new NoiseHelper2D(0.1, 0, 0, seed)),
       0.5
     )
-    const sandNoise = simpleThreshNoise(0.1, -182, 237, 0.5, seed)
-    const beachNoise = simpleThreshNoise(0.1, -182, 237, -0.2, seed)
+    const sandNoise = simpleThreshNoise2D(0.1, -182, 237, 0.5, seed)
+    const beachNoise = simpleThreshNoise2D(0.1, -182, 237, -0.2, seed)
     const waterBase = new AdditiveGroupHelper2D([
       new NoiseHelper2D(0.02, 0, 0, seed),
       new NoiseHelper2D(0.08, 0, 0, seed, 0.5)
@@ -98,13 +248,13 @@ export default class JITTileSampler {
       ]),
       -0.5
     )
-    const bushNoise = simpleThreshNoise(0.3, 300, 200, 0.25, seed)
+    const bushNoise = simpleThreshNoise2D(0.3, 300, 200, 0.25, seed)
     const goldNoise = new StepHelper2D(
       new BoxFilterHelper2D(new NoiseHelper2D(3, -300, 200, seed), -32, 32),
       0.75
     )
     const lampPostNoise = new StepHelper2D(
-      new BoxFilterHelper2D(simpleThreshNoise(3, -1300, 200, seed)),
+      new BoxFilterHelper2D(simpleThreshNoise2D(3, -1300, 200, 0, seed)),
       0.75
     )
     const testObjectNoise = new StepHelper2D(
@@ -115,7 +265,7 @@ export default class JITTileSampler {
       new BoxFilterHelper2D(new NoiseHelper2D(3, -204, -121, seed)),
       0.85
     )
-    const rockyGroundNoise = simpleThreshNoise(3, 204, -121, 0.25, seed)
+    const rockyGroundNoise = simpleThreshNoise2D(3, 204, -121, 0.25, seed)
     const rocksNoiseBase = new AdditiveGroupHelper2D([
       new NoiseHelper2D(0.01, 604, -121, seed),
       new NoiseHelper2D(0.05, 604, -121, seed, 0.5)
@@ -153,9 +303,9 @@ export default class JITTileSampler {
       new BoxFilterHelper2D(new NoiseHelper2D(0.08, -500, -100, seed)),
       0.35
     )
-    const treePineNoise = simpleThreshNoise(0.3, -200, -400, 0.5, seed)
-    const plantMatureNoise = simpleThreshNoise(3, -340, -460, 0.25, seed)
-    const treeMapleNoise = simpleThreshNoise(0.3, 200, 400, 0.6, seed)
+    const treePineNoise = simpleThreshNoise2D(0.3, -200, -400, 0.5, seed)
+    const plantMatureNoise = simpleThreshNoise2D(3, -340, -460, 0.25, seed)
+    const treeMapleNoise = simpleThreshNoise2D(0.3, 200, 400, 0.6, seed)
     this.metaNoiseGenerators = [
       waterNoise,
       dirtNoise,
@@ -430,7 +580,7 @@ export default class JITTileSampler {
 
   private _visPropsCache: Map<
     string,
-    NamedBitsInBytes<typeof this.tileMaker.visualPropertyLookupStrings>
+    TileVisualProps
   > = new Map()
 
   private _bottomAndTopIdsCache: Map<string, BottomAndTopIds> = new Map()
@@ -572,7 +722,7 @@ export default class JITTileSampler {
           if (heightCode > 0) {
             const groundId = `${baseName}${
               quadId * 16 + heightCode
-            }` as unknown as typeof this.tileMaker.visualPropertyLookupStrings
+            }` as TileVisualPropName
             visProps.enableBit(groundId)
           }
         }
@@ -623,7 +773,7 @@ export default class JITTileSampler {
             break
           }
         }
-        visProps.enableBit(`water${time}${landDist}`)
+        visProps.enableBit(`water${time}${landDist}` as TileVisualPropName)
       }
 
       const propMaskGrass = metaProps.makeFastMask('grass')
@@ -1162,11 +1312,7 @@ export default class JITTileSampler {
       return this._bottomAndTopIdsCache.get(key)!
     }
   }
-  sampleVisIdsByVisProps(
-    visProps: NamedBitsInBytes<
-      typeof this.tileMaker.visualPropertyLookupStrings
-    >
-  ) {
+  sampleVisIdsByVisProps(visProps: TileVisualProps) {
     const idBottom = this._tileMaker.getTileId(visProps.bytes)
     const visProps2 = visProps.bytes.slice()
     visProps2[0] |= 1
@@ -1177,6 +1323,9 @@ export default class JITTileSampler {
       idTop
     }
     return bottomAndTopIds
+  }
+  sampleVis(x: number, y: number, time: '0' | '1' | '2' | '3' = '0') {
+    return this.sampleVisIds(x, y, time)
   }
   updateMeta() {
     // if (this._offsetsDirty) {
@@ -1223,7 +1372,9 @@ export default class JITTileSampler {
     // }
     if (this.dirtyMeta.size > 0) {
       for (const v of this.dirtyMeta) {
-        const coords = v.split(':').map((v) => parseInt(v))
+        const coords = v
+          .split(':')
+          .map((coord: string) => Number.parseInt(coord, 10))
         const x = coords[0]
         const y = coords[1]
         const meta = this.sampleMeta(x, y)
@@ -1234,7 +1385,6 @@ export default class JITTileSampler {
             const visKey = `${x + cX}:${y + cY}`
             this.dirtyVis.add(visKey)
             this._bottomAndTopIdsCache.delete(visKey + ':0')
-            console.log('delete ' + visKey + ':0')
             this._visPropsCache.delete(visKey + ':0')
           }
         }
@@ -1361,7 +1511,9 @@ export default class JITTileSampler {
       const currentFrame =
         __animFrameTimes[this._animFrame % __animFrameTimes.length]
       for (const v of this.dirtyVis) {
-        const coords = v.split(':').map((v) => parseInt(v))
+        const coords = v
+          .split(':')
+          .map((coord: string) => Number.parseInt(coord, 10))
         const i = bottomPointsGeo.drawRange.count
         const i2 = i * 2
         const x = coords[0]
