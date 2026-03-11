@@ -4,7 +4,7 @@ import { nodeExternalsPlugin } from 'esbuild-node-externals'
 import { typecheckPlugin } from '@jgoz/esbuild-plugin-typecheck'
 
 const ctx = await context({
-  entryPoints: ['src/index.ts'],
+  entryPoints: ['src/index.ts', 'src/legacy.ts', 'src/rendering.ts'],
   outdir: 'lib',
   bundle: true,
   sourcemap: true,
@@ -25,4 +25,3 @@ const ctx = await context({
 await ctx.watch()
 
 await new Promise(() => {})
-

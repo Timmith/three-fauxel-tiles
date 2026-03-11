@@ -1,4 +1,4 @@
-import { getUrlParam } from './utils/location'
+import { getUrlParam } from '@lib/legacy'
 
 declare global {
   interface Window {

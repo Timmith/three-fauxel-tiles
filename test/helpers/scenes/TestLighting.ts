@@ -9,10 +9,12 @@ import {
   SphereGeometry,
   WebGLRenderer
 } from 'three'
-import { FPSControls } from '../../utils/fpsControls'
-import { getUrlFlag } from '../../utils/location'
-
-import { addPrettyLights } from '../utils/lights'
+import {
+  addPrettyLights,
+  FPSControls,
+  getUrlFlag,
+  getUrlFloat
+} from '@lib/legacy'
 
 import BaseTestScene from './BaseTestScene'
 
@@ -21,10 +23,14 @@ export default class TestLightingScene extends BaseTestScene {
   protected ambientLight: HemisphereLight
   constructor(testShapes = true, testFloor = true) {
     super()
-    const lights = addPrettyLights(this.scene, this.bgColor)
+    const lights = addPrettyLights(this.scene, this.bgColor, {
+      debugLights: getUrlFlag('debugLights')
+    })
     this.sunLight = lights.sunLight
     this.ambientLight = lights.ambientLight
-    const fps = new FPSControls(this.camera as PerspectiveCamera)
+    const fps = new FPSControls(this.camera as PerspectiveCamera, {
+      cameraDamping: getUrlFloat('camDamping', 0, 0, 0.999)
+    })
     if (getUrlFlag('fpsCam')) {
       fps.toggle(true)
     }
@@ -36,10 +42,7 @@ export default class TestLightingScene extends BaseTestScene {
         roughness: 0.7
       })
       if (testFloor) {
-        const floor = new Mesh(
-          new PlaneGeometry(1, 1, 1, 1),
-          basicMaterial
-        )
+        const floor = new Mesh(new PlaneGeometry(1, 1, 1, 1), basicMaterial)
         floor.scale.multiplyScalar(10)
         floor.castShadow = false
         floor.receiveShadow = true

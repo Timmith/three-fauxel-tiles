@@ -7,6 +7,11 @@ import MapCacheRenderer from '../../mapCache/MapCacheRenderer';
 import MapTileMaker from '../../rendering/tileMaker/mapTileMaker/MapTileMaker';
 import MapWithSpritesCacheRenderer from '../../mapCache/MapWithSpritesCacheRenderer';
 import PointLightRenderer from '../../mapCache/PointLightRenderer';
+import type { MapTileMakerOptions } from '../../rendering/tileMaker/mapTileMaker/MapTileMaker';
+export type MapScrollingViewOptions = {
+    tileMaker?: MapTileMakerOptions;
+    useOutlines?: boolean;
+};
 export default class MapScrollingView {
     tileMaker: MapTileMaker;
     spriteMaker: SpriteMaker;
@@ -25,6 +30,6 @@ export default class MapScrollingView {
     set offsetX(value: number);
     get offsetY(): number;
     set offsetY(value: number);
-    constructor(viewWidth?: number, viewHeight?: number, pixelsPerTile?: number, pixelsPerCacheEdge?: number, mapViewUvST?: Vector4, mapViewSubTilePixelOffsetUvST?: Vector4, clipspaceMode?: boolean, passes?: MaterialPassType[]);
+    constructor(viewWidth?: number, viewHeight?: number, pixelsPerTile?: number, pixelsPerCacheEdge?: number, mapViewUvST?: Vector4, mapViewSubTilePixelOffsetUvST?: Vector4, clipspaceMode?: boolean, passes?: MaterialPassType[], options?: MapScrollingViewOptions);
     render(renderer: WebGLRenderer, dt: number): void;
 }

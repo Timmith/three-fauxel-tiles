@@ -1,9 +1,4 @@
-import {
-  BufferGeometry,
-  PlaneGeometry,
-  SphereGeometry,
-  Vector3
-} from 'three'
+import { BufferGeometry, PlaneGeometry, SphereGeometry, Vector3 } from 'three'
 
 import { inferDirection } from './math'
 
@@ -88,10 +83,7 @@ export function getCachedSphereGeometry(
 ) {
   const key = `${radius};${segsX};${segsY}`
   if (!__cachedSphereGeometry.has(key)) {
-    __cachedSphereGeometry.set(
-      key,
-      new SphereGeometry(radius, segsX, segsY)
-    )
+    __cachedSphereGeometry.set(key, new SphereGeometry(radius, segsX, segsY))
   }
   return __cachedSphereGeometry.get(key)!
 }

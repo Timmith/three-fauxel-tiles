@@ -12,6 +12,16 @@
       "types": "./types/index.d.ts",
       "import": "./lib/index.js",
       "default": "./lib/index.js"
+    },
+    "./legacy": {
+      "types": "./types/legacy.d.ts",
+      "import": "./lib/legacy.js",
+      "default": "./lib/legacy.js"
+    },
+    "./rendering": {
+      "types": "./types/rendering.d.ts",
+      "import": "./lib/rendering.js",
+      "default": "./lib/rendering.js"
     }
   },
   "files": [
@@ -40,10 +50,10 @@
     "clean": "node ./scripts/clean-path.js ./lib",
     "lint": "npm run lint:eslint && npm run lint:prettier",
     "lint:fix": "npm run lint:fixeslint && npm run lint:fixprettier",
-    "lint:eslint": "eslint ./src --ext .ts",
-    "lint:prettier": "prettier --check --config ./.prettierrc './src/**/*.ts'",
-    "lint:fixprettier": "prettier --config ./.prettierrc --write './src/**/*.ts' && prettier --config ./.prettierrc --write './test/**/*.ts'",
-    "lint:fixeslint": "eslint ./src --ext .ts --fix && eslint ./test --ext .ts --fix"
+    "lint:eslint": "eslint ./src ./test ./examples --ext .ts",
+    "lint:prettier": "prettier --check --config ./.prettierrc \"src/**/*.ts\" \"test/**/*.ts\" \"examples/**/*.ts\" \"*.js\"",
+    "lint:fixprettier": "prettier --config ./.prettierrc --write \"src/**/*.ts\" \"test/**/*.ts\" \"examples/**/*.ts\" \"*.js\"",
+    "lint:fixeslint": "eslint ./src ./test ./examples --ext .ts --fix"
   },
   "dependencies": {
     "buffer": "^6.0.3",
@@ -55,8 +65,7 @@
     "util": "^0.12.5"
   },
   "peerDependencies": {
-    "three": "^0.183.0",
-    "three-pixel-font": "^0.0.13"
+    "three": "^0.183.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.45",
@@ -73,7 +82,6 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.8",
     "three": "^0.183.2",
-    "three-pixel-font": "^0.0.13",
     "threejs-camera-controller-first-person-desktop": "^5.0.1",
     "typescript": "^5.4.5"
   },

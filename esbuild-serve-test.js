@@ -1,6 +1,5 @@
 import { context } from 'esbuild'
 import { glsl } from 'esbuild-plugin-glsl'
-import { threeLegacyCompatPlugin } from './scripts/esbuild-three-legacy-compat.js'
 
 const ctx = await context({
   entryPoints: ['test/index.ts'],
@@ -13,7 +12,6 @@ const ctx = await context({
   target: ['esnext'],
   tsconfig: './tsconfig.test.json',
   plugins: [
-    threeLegacyCompatPlugin(),
     glsl({
       minify: false
     })

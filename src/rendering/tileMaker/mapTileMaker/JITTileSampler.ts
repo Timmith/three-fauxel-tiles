@@ -5,7 +5,9 @@ import NoiseHelper3D from '../../../helpers/utils/NoiseHelper3D'
 import { CardinalStrings } from '../../../meshes/factorySand'
 import { wrap } from '../../../utils/math'
 
-import MapTileMaker, { mapTileVisualPropertyLookupStrings } from './MapTileMaker'
+import MapTileMaker, {
+  mapTileVisualPropertyLookupStrings
+} from './MapTileMaker'
 import LocalStorageMap from '../../../utils/LocalStorageMap'
 type Helper2D = {
   getValue(x: number, y: number): number
@@ -78,12 +80,7 @@ class BoxFilterHelper2D implements Helper2D {
     private _maxY = _maxX
   ) {}
   getValue(x: number, y: number) {
-    if (
-      x < this._minX ||
-      x > this._maxX ||
-      y < this._minY ||
-      y > this._maxY
-    ) {
+    if (x < this._minX || x > this._maxX || y < this._minY || y > this._maxY) {
       return 0
     }
     return this._helper.getValue(x, y)
@@ -111,8 +108,10 @@ type BottomAndTopIds = {
   idBottom: number
 }
 
-type TileVisualProps = NamedBitsInBytes<typeof mapTileVisualPropertyLookupStrings>
-type TileVisualPropName = typeof mapTileVisualPropertyLookupStrings[number]
+type TileVisualProps = NamedBitsInBytes<
+  typeof mapTileVisualPropertyLookupStrings
+>
+type TileVisualPropName = (typeof mapTileVisualPropertyLookupStrings)[number]
 
 const metaTileStrings = [
   'water',
@@ -144,7 +143,7 @@ const metaTileStrings = [
   'door'
 ] as const
 
-type MetaTile = typeof metaTileStrings[number]
+type MetaTile = (typeof metaTileStrings)[number]
 
 type NamedMetaBits = NamedBitsInNumber<typeof metaTileStrings>
 
@@ -578,10 +577,7 @@ export default class JITTileSampler {
     return val
   }
 
-  private _visPropsCache: Map<
-    string,
-    TileVisualProps
-  > = new Map()
+  private _visPropsCache: Map<string, TileVisualProps> = new Map()
 
   private _bottomAndTopIdsCache: Map<string, BottomAndTopIds> = new Map()
 

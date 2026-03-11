@@ -1,10 +1,4 @@
-import {
-  Material,
-  Mesh,
-  Object3D,
-  Vector4,
-  WebGLRenderer
-} from 'three'
+import { Material, Mesh, Object3D, Vector4, WebGLRenderer } from 'three'
 import { verticalScale } from '../../../constants'
 import {
   changeMeshMaterials,

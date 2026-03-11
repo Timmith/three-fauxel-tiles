@@ -7,7 +7,7 @@ import {
   WebGLRenderer
 } from 'three'
 import device from '../../device'
-import { getUrlColor } from '../../utils/location'
+import { getUrlColor } from '@lib/legacy'
 
 const FOV = 35
 const MOBILE_FOV = 28

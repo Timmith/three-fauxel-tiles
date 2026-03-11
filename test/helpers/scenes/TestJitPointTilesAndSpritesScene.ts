@@ -14,22 +14,22 @@ import {
   WebGLRenderer,
   WebGLRenderTarget
 } from 'three'
-import { clamp, lerp } from 'three/src/math/MathUtils'
+import lib, {
+  PixelTextMesh,
+  getKeyboardInput,
+  getUrlFlag,
+  getUrlInt,
+  getMouseBoundViewTransform,
+  getQuickKeyboardDirectionVector
+} from '@lib/legacy'
 import { initOffset } from '../../constants'
-import { getMouseBoundViewTransform } from '../../helpers/viewTransformMouse'
-import { rand, rand2, wrap } from '../../utils/math'
+import { clamp, lerp, rand, rand2, wrap } from '../../utils/math'
 import { detRandLights, detRandPhysics } from '../../utils/random'
-import getKeyboardInput from '../../input/getKeyboardInput'
 import { KeyboardCodes } from '../../utils/KeyboardCodes'
-import PixelTextMesh from 'three-pixel-font'
-
-import lib from '@lib/index'
-import { getQuickKeyboardDirectionVector } from '../directionalKeyboardInputHelper'
 
 import BaseTestScene from './BaseTestScene'
 import JITTileSampler from '../../../src/rendering/tileMaker/mapTileMaker/JITTileSampler'
 import { removeFromArray } from '../../utils/arrayUtils'
-import { getUrlFlag, getUrlInt } from '../../utils/location'
 
 const __pixelsPerTile = getUrlInt('pixelsPerTile', 32)
 
@@ -628,7 +628,13 @@ export default class TestJitPointTilesAndSpritesScene extends BaseTestScene {
       this._mapViewUvST,
       this._mapViewSubTilePixelOffsetUvST,
       clipspaceMode,
-      passes
+      passes,
+      {
+        tileMaker: {
+          snow: getUrlFlag('snow')
+        },
+        useOutlines: getUrlFlag('outlines')
+      }
     )
     const spriteControllers: DummyController[] = []
     const player = new DummyController(
@@ -1053,15 +1059,10 @@ export default class TestJitPointTilesAndSpritesScene extends BaseTestScene {
     this.finalViewCacheScene = finalViewCacheScene
     this.finalViewCacheCamera = finalViewCacheCamera
 
-    const testText = new PixelTextMesh.PixelTextMesh(
-      '',
-      undefined,
-      undefined,
-      (w, h) => {
-        testText.scale.x = ((w * 7) / 512) * 2
-        testText.scale.y = ((h * 8) / 512) * 2
-      }
-    )
+    const testText = new PixelTextMesh('', undefined, undefined, (w, h) => {
+      testText.scale.x = ((w * 7) / 512) * 2
+      testText.scale.y = ((h * 8) / 512) * 2
+    })
     testText.position.set(0.5, 0.5, 0)
     scene.add(testText)
     this.testText = testText
@@ -1223,7 +1224,8 @@ function rigHarvestAction(
                     const dist = Math.max(0.01, Math.sqrt(dx * dx + dy * dy))
                     console.log(dist)
                     if (dist < grabDistance) {
-                      ;(player as any).grabbed = other
+                      const grabbingPlayer = player as any
+                      grabbingPlayer.grabbed = other
                     }
                   }
                 }
@@ -1232,7 +1234,8 @@ function rigHarvestAction(
           }
         } else if (!down && grabbing) {
           console.log('release')
-          ;(player as any).grabbed = null
+          const grabbingPlayer = player as any
+          grabbingPlayer.grabbed = null
           grabbing = down
         }
         break

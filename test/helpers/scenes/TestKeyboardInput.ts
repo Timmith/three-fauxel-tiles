@@ -1,5 +1,5 @@
 import { WebGLRenderer } from 'three'
-import getKeyboardInput from '~/input/getKeyboardInput'
+import { getKeyboardInput } from '@lib/legacy'
 
 import TestLightingScene from './TestLighting'
 

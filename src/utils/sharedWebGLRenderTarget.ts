@@ -33,12 +33,8 @@ interface UvOptions extends WebGLRenderTargetOptions {
   uvScaleTranslateUniform?: { value: Vector4 }
 }
 
-export const prototypePlaneGeometryUvAttribute = new PlaneGeometry(
-  1,
-  1,
-  1,
-  1
-).attributes.uv as BufferAttribute
+export const prototypePlaneGeometryUvAttribute = new PlaneGeometry(1, 1, 1, 1)
+  .attributes.uv as BufferAttribute
 
 const defaultRenderTargetOptions: Partial<FixedWebGLRenderTargetOptions> = {
   wrapS: RepeatWrapping,

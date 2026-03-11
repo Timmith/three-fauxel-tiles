@@ -10,10 +10,9 @@ import {
   Vector3,
   WebGLRenderer
 } from 'three'
-import { getMouseBoundViewTransform } from '../viewTransformMouse'
 
 import BaseTestScene from './BaseTestScene'
-import lib from '@lib/index'
+import lib, { getMouseBoundViewTransform } from '@lib/legacy'
 
 export default class TestJitTilesScene extends BaseTestScene {
   protected _transform: Vector3

@@ -136,10 +136,7 @@ export default class MapWithSpritesCacheRenderer {
     backdropMaterial.depthTest = false
     backdropMaterial.depthWrite = false
 
-    const backdrop = new Mesh(
-      new PlaneGeometry(200, 200),
-      backdropMaterial
-    )
+    const backdrop = new Mesh(new PlaneGeometry(200, 200), backdropMaterial)
     mapCacheScene.add(backdrop)
     backdrop.position.z = -1
     backdrop.renderOrder = -1

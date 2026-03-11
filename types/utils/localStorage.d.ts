@@ -1,0 +1,13 @@
+import { Color, Vector3 } from 'three';
+export declare function getLocalStorageParam(key: string): string | null;
+export declare function setLocalStorageParam(key: string, val: string): void;
+export declare function getLocalStorageFlag(key: string): boolean;
+export declare function setLocalStorageFlag(key: string, val: boolean): void;
+export declare function getLocalStorageFloat(key: string, defaultVal: number, min?: number, max?: number): number;
+export declare function setLocalStorageFloat(key: string, val: number): void;
+export declare function getLocalStorageInt(key: string, defaultVal: number, min?: number, max?: number): number;
+export declare function setLocalStorageInt(key: string, val: number): void;
+export declare function getLocalStorageColor(key: string, defaultColor: string): Color;
+export declare function setLocalStorageColor(key: string, color: Color): void;
+export declare function getLocalStorageVec3(key: string, defX?: number, defY?: number, defZ?: number, min?: number, max?: number): Vector3;
+export declare function setLocalStorageVec3(key: string, val: Vector3): void;

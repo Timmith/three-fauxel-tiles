@@ -1,4 +1,10 @@
-import { BufferAttribute, BufferGeometry, Vector2, Vector3 } from 'three'
+import {
+  BufferAttribute,
+  BufferGeometry,
+  Sphere,
+  Vector2,
+  Vector3
+} from 'three'
 import { lerp, rand, rand2, unlerp } from '../utils/math'
 import { TILES } from '../helpers/utils/tilesEnum'
 
@@ -488,6 +494,7 @@ export default class PegboardGeometry extends BufferGeometry {
       setDrawRange(0, Math.min(maxDrawSize, i3out))
     }
     updateGeometry()
+    this.boundingSphere = new Sphere(new Vector3(), size * 16)
     this.update = () => {
       updateGeometry()
     }

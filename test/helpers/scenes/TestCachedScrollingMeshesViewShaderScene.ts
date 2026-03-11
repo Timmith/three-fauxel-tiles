@@ -8,11 +8,9 @@ import {
   Scene,
   WebGLRenderer
 } from 'three'
-import lib from '@lib/index'
+import lib, { getQuickKeyboardDirectionVector } from '@lib/legacy'
 import { rand } from '../../utils/math'
 import { detRandGraphics } from '../../utils/random'
-
-import { getQuickKeyboardDirectionVector } from '../directionalKeyboardInputHelper'
 
 import BaseTest2DScene from './BaseTest2DScene'
 

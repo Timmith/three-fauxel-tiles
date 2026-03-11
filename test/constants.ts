@@ -1,4 +1,4 @@
-import { getUrlFlag, getUrlInt } from './utils/location'
+import { getUrlFlag, getUrlInt } from '@lib/legacy'
 
 export const RESET_USER_SETTINGS_TO_DEFAULTS = getUrlFlag('resetSettings')
 

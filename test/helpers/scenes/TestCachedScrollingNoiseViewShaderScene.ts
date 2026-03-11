@@ -7,9 +7,7 @@ import {
   WebGLRenderer
 } from 'three'
 
-import lib from '@lib/index'
-
-import { getQuickKeyboardDirectionVector } from '../directionalKeyboardInputHelper'
+import lib, { getQuickKeyboardDirectionVector } from '@lib/legacy'
 import BaseTest2DScene from './BaseTest2DScene'
 
 export default class TestCachedScrollingNoiseViewShaderScene extends BaseTest2DScene {

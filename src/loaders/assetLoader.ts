@@ -25,7 +25,7 @@ export async function loadJson(url: string): Promise<object> {
       (fileContents: string | ArrayBuffer) =>
         resolve(
           JSON.parse(
-            typeof fileContents === "string"
+            typeof fileContents === 'string'
               ? fileContents
               : new TextDecoder().decode(fileContents)
           )
@@ -42,7 +42,7 @@ export async function loadText(url: string): Promise<string> {
       url,
       (fileContents: string | ArrayBuffer) =>
         resolve(
-          typeof fileContents === "string"
+          typeof fileContents === 'string'
             ? fileContents
             : new TextDecoder().decode(fileContents)
         ),

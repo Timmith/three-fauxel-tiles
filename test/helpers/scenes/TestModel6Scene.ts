@@ -1,9 +1,9 @@
 import { getMeshMaterial } from '../../../src/helpers/materials/materialLib'
+import { wheelBarrowMaterialNames } from '@lib/legacy'
 import TestLightingScene from './TestLighting'
 import UpdateManager from '../../utils/UpdateManager'
 import renderer from '../../renderer'
 import { Object3D } from 'three'
-import { wheelBarrowMaterialNames } from '../wheelBarrowMaterialNames'
 import { makeWheelBarrow } from '../../../src/meshes/factoryWheelBarrow'
 
 export default class TestModel6Scene extends TestLightingScene {

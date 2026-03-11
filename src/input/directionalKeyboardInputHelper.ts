@@ -1,8 +1,8 @@
 import { Vector2 } from 'three'
-import getKeyboardInput from '../input/getKeyboardInput'
+import getKeyboardInput from './getKeyboardInput'
 import { KeyboardCodes } from '../utils/KeyboardCodes'
 
-const __arrowKeysDirection: Map<string, Vector2> = new Map()
+const quickKeyboardDirectionVectors: Map<string, Vector2> = new Map()
 
 export function getQuickKeyboardDirectionVector(
   up: KeyboardCodes = 'ArrowUp',
@@ -11,9 +11,10 @@ export function getQuickKeyboardDirectionVector(
   right: KeyboardCodes = 'ArrowRight'
 ) {
   const key = `${up}:${down}:${left}:${right}`
-  if (!__arrowKeysDirection.has(key)) {
-    const arrowKeysDirection = new Vector2()
-    __arrowKeysDirection.set(key, arrowKeysDirection)
+  if (!quickKeyboardDirectionVectors.has(key)) {
+    const direction = new Vector2()
+    quickKeyboardDirectionVectors.set(key, direction)
+
     const buttonStates = {
       up: false,
       down: false,
@@ -21,8 +22,8 @@ export function getQuickKeyboardDirectionVector(
       right: false
     }
 
-    const onKey = (key: KeyboardCodes, pressed: boolean) => {
-      switch (key) {
+    const onKey = (code: KeyboardCodes, pressed: boolean) => {
+      switch (code) {
         case up:
           buttonStates.up = pressed
           break
@@ -36,12 +37,15 @@ export function getQuickKeyboardDirectionVector(
           buttonStates.right = pressed
           break
       }
-      arrowKeysDirection.x = buttonStates.left ? -1 : 0
-      arrowKeysDirection.x += buttonStates.right ? 1 : 0
-      arrowKeysDirection.y = buttonStates.up ? -1 : 0
-      arrowKeysDirection.y += buttonStates.down ? 1 : 0
+
+      direction.x = buttonStates.left ? -1 : 0
+      direction.x += buttonStates.right ? 1 : 0
+      direction.y = buttonStates.up ? -1 : 0
+      direction.y += buttonStates.down ? 1 : 0
     }
+
     getKeyboardInput().addListener(onKey)
   }
-  return __arrowKeysDirection.get(key)!
+
+  return quickKeyboardDirectionVectors.get(key)!
 }

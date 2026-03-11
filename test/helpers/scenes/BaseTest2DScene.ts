@@ -1,6 +1,6 @@
 import { OrthographicCamera, Vector3 } from 'three'
+import { getMouseBoundViewTransform } from '@lib/legacy'
 import device from '~/device'
-import { getMouseBoundViewTransform } from '~/helpers/viewTransformMouse'
 
 import BaseTestScene from './BaseTestScene'
 

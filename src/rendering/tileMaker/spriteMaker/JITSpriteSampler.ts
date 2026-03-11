@@ -30,7 +30,7 @@ const metaSpriteStrings = [
   'animTime2',
   'animTime4'
 ] as const
-type MetaSprite = typeof metaSpriteStrings[number]
+type MetaSprite = (typeof metaSpriteStrings)[number]
 
 const visualSpriteStrings = [
   'layer2',
@@ -69,7 +69,7 @@ const visualSpriteStrings = [
   'wheelBarrowRun7'
 ] as const
 
-type VisSprite = typeof visualSpriteStrings[number]
+type VisSprite = (typeof visualSpriteStrings)[number]
 
 const masks8: number[] = []
 for (let i = 0; i < 8; i++) {

@@ -1,7 +1,6 @@
 import { Mesh, PlaneGeometry, Vector3, WebGLRenderer } from 'three'
-import { getMouseBoundViewTransform } from '~/helpers/viewTransformMouse'
 import { loadPixelatedTexture } from '~/utils/threeUtils'
-import lib from '@lib/index'
+import lib, { getMouseBoundViewTransform } from '@lib/legacy'
 
 import BaseTestScene from './BaseTestScene'
 

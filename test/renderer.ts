@@ -6,7 +6,8 @@ import {
   devicePixelRatioUniform,
   pixelSizeInClipSpaceUniform
 } from './uniforms'
-import { NiceParameter } from './utils/NiceParameter'
+import { setDefaultFPSControlsDomElement } from '@lib/legacy'
+import { NiceParameter } from '@lib/utils/NiceParameter'
 
 const canvas = document.createElement('canvas')
 const context = canvas.getContext('webgl2', {
@@ -24,6 +25,7 @@ const renderer = new WebGLRenderer({
   // powerPreference: "low-power"
 })
 document.body.append(canvas)
+setDefaultFPSControlsDomElement(renderer.domElement)
 const attributeValues: string[] = [
   '-moz-crisp-edges',
   '-webkit-crisp-edges',

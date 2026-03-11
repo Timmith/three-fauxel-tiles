@@ -1,10 +1,13 @@
 import { PerspectiveCamera, WebGLRenderer } from 'three'
-import PixelTextMesh from 'three-pixel-font'
-import { loadText } from '../../loaders/assetLoader'
-import { FPSControls } from '../../utils/fpsControls'
+import {
+  FPSControls,
+  getUrlFlag,
+  getUrlFloat,
+  loadText,
+  PixelTextMesh
+} from '@lib/legacy'
 
 import BaseTestScene from './BaseTestScene'
-import { getUrlFlag } from '../../utils/location'
 
 function url(name: string, ext: string) {
   return `books/${name}.${ext}`
@@ -16,7 +19,9 @@ export default class TestPixelTextScene extends BaseTestScene {
     this.camera.position.set(0, 0, 0.5)
     this.camera.lookAt(0, 0, 0)
     // this.camera.updateProjectionMatrix()
-    const fps = new FPSControls(this.camera as PerspectiveCamera)
+    const fps = new FPSControls(this.camera as PerspectiveCamera, {
+      cameraDamping: getUrlFloat('camDamping', 0, 0, 0.999)
+    })
     if (getUrlFlag('fpsCam')) {
       fps.toggle(true)
     }
@@ -33,15 +38,10 @@ export default class TestPixelTextScene extends BaseTestScene {
       bookText = await loadText(url('augustine-confessions-276', 'txt'))
       // bookText = '1.0\n1.0.3\n1.0.31\n1.0.3 1\n1 .0.3 1\n-.-.E.E-E'
       // bookText = '© Tomasz Dysinski. Here & now.'
-      const book = new PixelTextMesh.PixelTextMesh(
-        bookText,
-        undefined,
-        undefined,
-        (w, h) => {
-          book.scale.x = 0.01 * w
-          book.scale.y = 0.01 * h
-        }
-      )
+      const book = new PixelTextMesh(bookText, undefined, undefined, (w, h) => {
+        book.scale.x = 0.01 * w
+        book.scale.y = 0.01 * h
+      })
       book.position.set(-0.125, 0, 0)
       this.scene.add(book)
     }

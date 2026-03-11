@@ -1,11 +1,10 @@
 import { Color, Vector3, WebGLRenderer } from 'three'
 
-import lib from '@lib/index'
-
-import { getQuickKeyboardDirectionVector } from '../directionalKeyboardInputHelper'
+import lib, {
+  getQuickKeyboardDirectionElevation,
+  getQuickKeyboardDirectionVector
+} from '@lib/legacy'
 import BaseTest2DScene from './BaseTest2DScene'
-
-import { getQuickKeyboardDirectionElevation } from '../elevationKeyboardInputHelper'
 
 const blockLib = [
   //   -1,

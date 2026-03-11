@@ -1,20 +1,21 @@
 import KeyboardInput from './KeyboardInput'
 
-let _ki: KeyboardInput | undefined
+let keyboardInput: KeyboardInput | undefined
+
 export default function getKeyboardInput() {
-  if (!_ki) {
-    _ki = new KeyboardInput()
+  if (!keyboardInput) {
+    keyboardInput = new KeyboardInput()
   }
-  return _ki
+  return keyboardInput
 }
 
 export function rigToKeyboard(callback: (controller: KeyboardInput) => void) {
-  let initd = false
-  window.addEventListener('keydown', (e: KeyboardEvent) => {
-    if (initd) {
+  let initialized = false
+  window.addEventListener('keydown', () => {
+    if (initialized) {
       return
     }
-    initd = true
+    initialized = true
     console.log('Keyboard connected.')
     callback(getKeyboardInput())
   })

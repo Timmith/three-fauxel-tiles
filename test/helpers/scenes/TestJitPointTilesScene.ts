@@ -7,16 +7,17 @@ import {
   Vector4,
   WebGLRenderer
 } from 'three'
+import lib, {
+  getUrlFlag,
+  getUrlInt,
+  getMouseBoundViewTransform,
+  getQuickKeyboardDirectionVector
+} from '@lib/legacy'
 import { initOffset } from '~/constants'
-import { getMouseBoundViewTransform } from '~/helpers/viewTransformMouse'
 import { wrap } from '~/utils/math'
-
-import { getQuickKeyboardDirectionVector } from '../directionalKeyboardInputHelper'
-import lib from '@lib/index'
 
 import BaseTestScene from './BaseTestScene'
 import JITTileSampler from './tileMaker/JITTileSampler'
-import { getUrlFlag, getUrlInt } from '../../utils/location'
 
 const __pixelsPerTile = getUrlInt('pixelsPerTile', 32)
 export default class TestJitPointTilesScene extends BaseTestScene {
@@ -64,7 +65,13 @@ export default class TestJitPointTilesScene extends BaseTestScene {
       this._mapViewUvST,
       this._mapViewSubTilePixelOffsetUvST,
       clipspaceMode,
-      passes
+      passes,
+      {
+        tileMaker: {
+          snow: getUrlFlag('snow')
+        },
+        useOutlines: getUrlFlag('outlines')
+      }
     )
     const allViews = clipspaceMode
       ? [mapScrollingView.mapCacheFinalView]

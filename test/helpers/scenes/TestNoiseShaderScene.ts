@@ -1,6 +1,6 @@
 import { Mesh, PlaneGeometry, Vector4 } from 'three'
 import BaseTest2DScene from './BaseTest2DScene'
-import lib from '@lib/index'
+import lib from '@lib/legacy'
 
 export default class TestNoiseShaderScene extends BaseTest2DScene {
   uvST: Vector4

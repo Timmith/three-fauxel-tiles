@@ -14,7 +14,12 @@ import { sunOffset, sunSpeed } from '../../constants'
 import MapWithSpritesCacheRenderer from '../../mapCache/MapWithSpritesCacheRenderer'
 import PointLightRenderer from '../../mapCache/PointLightRenderer'
 import { getSharedRectangleGeometry } from '../../utils/geometry'
-import { getUrlFlag } from '../../utils/location'
+import type { MapTileMakerOptions } from '../../rendering/tileMaker/mapTileMaker/MapTileMaker'
+
+export type MapScrollingViewOptions = {
+  tileMaker?: MapTileMakerOptions
+  useOutlines?: boolean
+}
 export default class MapScrollingView {
   tileMaker: MapTileMaker
   spriteMaker: SpriteMaker
@@ -53,12 +58,14 @@ export default class MapScrollingView {
     mapViewUvST?: Vector4,
     mapViewSubTilePixelOffsetUvST?: Vector4,
     clipspaceMode = true,
-    passes?: MaterialPassType[]
+    passes?: MaterialPassType[],
+    options: MapScrollingViewOptions = {}
   ) {
     const tileMaker = new MapTileMaker(
       pixelsPerTile,
       pixelsPerCacheEdge,
-      passes
+      passes,
+      options.tileMaker
     )
     const spriteMaker = new SpriteMaker(
       pixelsPerTile,
@@ -147,7 +154,7 @@ export default class MapScrollingView {
       relativePixelSize: 1 / viewWidth / pixelsPerTile,
       pixelsPerTile,
       textureFog: this._noiseMaker.texture,
-      useOutlines: getUrlFlag('outlines')
+      useOutlines: options.useOutlines ?? false
     })
     const mapCacheFinalView = new Mesh(
       getSharedRectangleGeometry(),

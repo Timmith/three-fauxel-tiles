@@ -61,7 +61,7 @@ export const CuratedMaterialTypeStrings = [
   'snow'
 ] as const
 
-export type CuratedMaterialType = typeof CuratedMaterialTypeStrings[number]
+export type CuratedMaterialType = (typeof CuratedMaterialTypeStrings)[number]
 
 export const isCuratedMaterial = makeSafetyCheckFromConstStringArray(
   CuratedMaterialTypeStrings
@@ -79,7 +79,7 @@ const MaterialPassTypeStrings = [
   'pointLights'
 ] as const
 
-export type MaterialPassType = typeof MaterialPassTypeStrings[number]
+export type MaterialPassType = (typeof MaterialPassTypeStrings)[number]
 
 export const isMaterialPass = makeSafetyCheckFromConstStringArray(
   MaterialPassTypeStrings

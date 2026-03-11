@@ -1,10 +1,10 @@
 import { getMeshMaterial } from '../../../src/helpers/materials/materialLib'
+import { skeletonMaterialNames } from '@lib/legacy'
 import TestLightingScene from './TestLighting'
 import UpdateManager from '../../utils/UpdateManager'
 import renderer from '../../renderer'
 import { Object3D } from 'three'
 import { makeSkeleton } from '../../../src/meshes/factorySkeleton'
-import { skeletonMaterialNames } from '../skeletonMaterialNames'
 
 export default class TestModel4Scene extends TestLightingScene {
   constructor() {

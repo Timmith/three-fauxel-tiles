@@ -1,6 +1,6 @@
 import { Euler, PerspectiveCamera } from 'three'
-import device from '~/device'
-import { clamp } from '~/utils/math'
+import device from '../device'
+import { clamp } from './math'
 
 const SHAKE_CHANGE_DURATION = 0.1
 const LOW_HERTZ = 200
@@ -9,7 +9,21 @@ const HIGH_HERTZ = 6000
 const FOV = 35
 const MOBILE_FOV = 28
 
-class CameraShaker {
+type DeviceAdapter = {
+  aspect: number
+  isMobile: boolean
+  onChange(listener: () => void, firstOneForFree?: boolean): () => void
+}
+
+export type ResponsivePerspectiveCameraOptions = {
+  device?: DeviceAdapter
+  far?: number
+  fov?: number
+  mobileFov?: number
+  near?: number
+}
+
+export class CameraShaker {
   private set shakeStrength(value: number) {
     value = clamp(value, 0, 1)
     if (value === this._shakeStrength) {
@@ -75,18 +89,44 @@ class CameraShaker {
   }
 }
 
-const camera = new PerspectiveCamera(
-  device.isMobile ? MOBILE_FOV : FOV,
-  device.aspect,
-  0.01,
-  10
-)
+export function bindPerspectiveCameraToDevice(
+  camera: PerspectiveCamera,
+  {
+    device: boundDevice = device,
+    fov = FOV,
+    mobileFov = MOBILE_FOV
+  }: ResponsivePerspectiveCameraOptions = {}
+) {
+  return boundDevice.onChange(() => {
+    camera.fov = boundDevice.isMobile ? mobileFov : fov
+    camera.aspect = boundDevice.aspect
+    camera.updateProjectionMatrix()
+  }, true)
+}
 
-export const cameraShaker = new CameraShaker(camera)
+export function createResponsivePerspectiveCamera({
+  device: boundDevice = device,
+  far = 10,
+  fov = FOV,
+  mobileFov = MOBILE_FOV,
+  near = 0.01
+}: ResponsivePerspectiveCameraOptions = {}) {
+  const camera = new PerspectiveCamera(
+    boundDevice.isMobile ? mobileFov : fov,
+    boundDevice.aspect,
+    near,
+    far
+  )
+  bindPerspectiveCameraToDevice(camera, {
+    device: boundDevice,
+    fov,
+    mobileFov
+  })
+  return camera
+}
 
-device.onChange(() => {
-  camera.fov = device.isMobile ? MOBILE_FOV : FOV
-  camera.aspect = device.aspect
-  camera.updateProjectionMatrix()
-  cameraShaker.updateProjection()
-})
+export function createResponsiveCameraShaker(
+  options: ResponsivePerspectiveCameraOptions = {}
+) {
+  return new CameraShaker(createResponsivePerspectiveCamera(options))
+}

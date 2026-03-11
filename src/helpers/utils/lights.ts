@@ -8,18 +8,25 @@ import {
   Scene,
   Vector3
 } from 'three'
-import { getUrlFlag } from '~/utils/location'
+
+export type PrettyLightsOptions = {
+  debugLights?: boolean
+}
 
 const __defaultGroundColor = new Color(0x4f3f2f).multiplyScalar(0.5)
 const __defaultSkyColor = new Color(0xafbfef).multiplyScalar(0.5)
 
-const s = 10
+const s = 3
 
 const __defaultShadowBoxSize = new Vector3(0.8 * s, 0.2 * s, 0.6 * s)
 const __defaultShadowBoxCenter = new Vector3(0 * s, 0.05 * s, 0.04 * s)
 
 const ZERO = new Vector3()
-export function addPrettyLights(scene: Scene, bgColor: Color) {
+export function addPrettyLights(
+  scene: Scene,
+  bgColor: Color,
+  options: PrettyLightsOptions = {}
+) {
   const ambientLight = new HemisphereLight(
     __defaultSkyColor,
     __defaultGroundColor
@@ -31,7 +38,7 @@ export function addPrettyLights(scene: Scene, bgColor: Color) {
 
   sunLight.name = 'sunlight'
   sunLight.castShadow = true
-  sunLight.shadow.bias = -0.002
+  sunLight.shadow.bias = 0.001
   sunLight.shadow.camera.near = 0.1
   sunLight.shadow.camera.far = 10
   sunLight.shadow.camera.left = -5
@@ -39,7 +46,7 @@ export function addPrettyLights(scene: Scene, bgColor: Color) {
   sunLight.shadow.camera.top = -3
   sunLight.shadow.camera.bottom = 3
   sunLight.shadow.camera.updateProjectionMatrix()
-  sunLight.shadow.mapSize.width = sunLight.shadow.mapSize.height = 128
+  sunLight.shadow.mapSize.width = sunLight.shadow.mapSize.height = 1024
 
   const distance = 5
   const angle = 0.6
@@ -86,7 +93,7 @@ export function addPrettyLights(scene: Scene, bgColor: Color) {
   // shadowCam.matrix.copy(sunLight.matrixWorld)
   shadowCam.updateProjectionMatrix()
 
-  if (getUrlFlag('debugLights')) {
+  if (options.debugLights) {
     const sunLightHelper = new DirectionalLightHelper(sunLight)
     const sunLightCamHelper = new CameraHelper(sunLight.shadow.camera)
     scene.add(sunLightHelper)
