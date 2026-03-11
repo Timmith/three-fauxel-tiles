@@ -1,4 +1,5 @@
 # three-fauxel-tiles
+
 A experiment to render faux PBR pixel-art, by prerendering it onto a tile atlas, just in time.
 
 ## Development
@@ -7,9 +8,13 @@ This repo now uses `npm` as the canonical package manager.
 
 ```bash
 npm install
-npm run lib:build
-npm run test:build
+npm run dev
 ```
+
+Expect a fun visual demo at:
+http://localhost:8002/index.html?test=jitPointTilesAndSprites&play=true&christmas=true&pixel-down-sample=2
+
+WSAD controls the movement of the skeleton, a wheelbarrow is also spawned beside you which you can grab and drag around by holding SpaceBar and moving in any direction (it may be a bit tricky at first to grab). Also, the wood logs can be picked up using the wheelbarrow. The tile you are facing can be built on using the B(key) and destructed by using the X(key).
 
 The browser harness is built into `test-www/`. The distributable library is emitted to `lib/` with declarations in `types/`.
 
@@ -42,8 +47,8 @@ Small integration examples live in:
 - `examples/integrate-root.ts`
 - `examples/integrate-rendering.ts`
 
+# Approach and History
 
-# Approach and History #
 This is an attempt to combine these ideas:
 
 - Deferred rendering (PBR)

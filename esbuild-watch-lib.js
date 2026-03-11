@@ -1,7 +1,6 @@
 import { context } from 'esbuild'
 import { glsl } from 'esbuild-plugin-glsl'
 import { nodeExternalsPlugin } from 'esbuild-node-externals'
-import { typecheckPlugin } from '@jgoz/esbuild-plugin-typecheck'
 
 const ctx = await context({
   entryPoints: ['src/index.ts', 'src/legacy.ts', 'src/rendering.ts'],
@@ -14,7 +13,6 @@ const ctx = await context({
   target: ['esnext'],
   tsconfig: './tsconfig.module.json',
   plugins: [
-    typecheckPlugin(),
     glsl({
       minify: false
     }),
